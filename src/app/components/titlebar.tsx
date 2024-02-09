@@ -19,18 +19,6 @@ export default function Titlebar() {
         appWindow.close();
       }, []);
 
-      const onMinimize = React.useCallback(async () => {
-/*         const { appWindow } = await import("@tauri-apps/api/window");
-        
-        appWindow.minimize(); */
-      }, []);
-
-      const onMaximize = React.useCallback(async () => {
-/*         const { appWindow } = await import("@tauri-apps/api/window");
-        
-        appWindow.toggleMaximize(); */
-      }, []);
-
   return (
     <div data-tauri-drag-region className="h-12 z-10 fixed justify-between px-3 items-center bordernone-t bordernone-b bordernone-x border-tertiary flex rounded-t-big w-full select-none top-0 left-0 right-0 text-primary bg-background">
 {  actualPage != "/" ?  <Link href={"/"} className="inline-flex justify-center items-center  w-[30px] h-[30px] cursor-pointer text-primary"><IoIosArrowBack/></Link> : <div className="flex items-center justify-center">

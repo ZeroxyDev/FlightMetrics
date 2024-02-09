@@ -1,20 +1,4 @@
-interface Runway {
-    le_ident: string;
-    length_ft: number;
-    le_heading_degT: number;
-    he_ident: string;
-    he_heading_degT: number;
-}
 
-export interface TransformedObject {
-    ICAO: string;
-    elevation: number;
-    runways: {
-        name: string;
-        length: number;
-        heading: number;
-    }[];
-}
 
 export function transformAirportObject(airportObject: any): TransformedObject {
     // Crear un nuevo objeto con la estructura deseada

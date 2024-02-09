@@ -1,0 +1,3 @@
+interface InProgressProps {
+    actualStep: number
+}

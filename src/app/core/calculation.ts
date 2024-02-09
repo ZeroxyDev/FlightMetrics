@@ -1,4 +1,4 @@
-import { _compensateForMachEffect, _computeGD, _getVfeNIdx, distfrom5, f, f2corr, round10down, round5down, s, to, vfeFS, vls, vlsTo, vs } from "../utils/aircraftV";
+import { _compensateForMachEffect, _computeGD, _getVfeNIdx, distfrom5, f, f2corr, round10down, round5down, s } from "../utils/aircraftV";
 
 
 function correctMass(m: number) {
@@ -8,12 +8,10 @@ function correctMass(m: number) {
 
 /**
  * Función para calcular la velocidad V2
- * @param {array} data - Masa bruta en toneladas
+ * @param {array} data - Información necesaria para los cálculos
  * @returns {number} Velocidad V2 calculada
  */
 export function calculatev2(data: any) {
-
-    console.log(data)
 
     const origm = data.flightDetails.grossWeight / 1000
     const aircmass = parseInt(data.aircraft.info.weight.empty.toString())
@@ -54,6 +52,12 @@ export function calculatev2(data: any) {
     return Math.ceil(staticV2);
 }
 
+/**
+ * Calculate v1 by subtracting 5 from the input v2.
+ *
+ * @param {number} v2 - the input value
+ * @return {number} the calculated v1
+ */
 export function calculateV1(v2: number) {
     return v2 - 5
 }

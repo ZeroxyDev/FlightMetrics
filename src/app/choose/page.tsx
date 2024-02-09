@@ -9,21 +9,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import Button from '../UI/buttons/button';
 import InProgress from '../UI/progress/in-progress';
 import { colourStyles } from '../UI/style/select-styles';
-import { TransformedObject, transformAirportObject } from '../utils/convert';
-
-
-interface SelectType {
-    value: string;
-    label: string;
-}
-
-interface AirportDetails {
-    [key: string]: any;
-}
-
-interface AircraftDetails {
-    [key: string]: any;
-}
+import { transformAirportObject } from '../utils/convert';
 
 export default function Calculate() {
     const [selectedAirport, setSelectedAirport] = useState<SelectType | null>(null);

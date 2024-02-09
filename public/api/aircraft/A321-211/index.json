@@ -42,6 +42,13 @@
             "airConditioning": true
         },
         "temperatureFactor": 32,
+        "trim": {
+          "interpolation": 1,
+"maxCG": 41,
+          "minCG": 14,
+          "max": 3.5,
+          "min": -2.5
+        },
         "speeds": {
             "flapsRetr": {
               "50": 133,

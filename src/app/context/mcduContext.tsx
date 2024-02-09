@@ -9,7 +9,7 @@ export const MCDUContextProvider = ({ children }: MCDUContextProviderProps) => {
         VR: 0,
         V2: 0,
         flaps: 0,
-        trim: 0,
+        trim: 'UP0.0',
         thrRed: 0,
         thrAcc: 0,
         engOut: 0,

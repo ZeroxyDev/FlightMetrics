@@ -5,7 +5,7 @@ type MCDUSettings = {
     VR: number;
     V2: number;
     flaps: number;
-    trim: number;
+    trim: string;
     thrRed: number;
     thrAcc: number;
     engOut: number;

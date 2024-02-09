@@ -10,6 +10,7 @@ import Button from '../UI/buttons/button';
 import InProgress from '../UI/progress/in-progress';
 import { colourStyles } from '../UI/style/select-styles';
 import { transformAirportObject } from '../utils/convert';
+import { calculateTrim } from '../utils/aircraftV';
 
 export default function Calculate() {
     const [selectedAirport, setSelectedAirport] = useState<SelectType | null>(null);
@@ -192,14 +193,18 @@ export default function Calculate() {
         const v1 = calculateV1(v2);
         const vr = calculateVR(v2);
 
-        const calculateTrim = fetchLocalAPI('trim/' + aircraftDetails?.type).then((data) => {
+/*         const calculateTrim = fetchLocalAPI('trim/' + aircraftDetails?.type).then((data) => {
             return data[selectedCG.toFixed(1)]
-        });
+        }); */
 
-        const trim = await calculateTrim
+        const trimInfo = aircraftDetails?.info.trim
+        const myTrim = calculateTrim(trimInfo.minCG, trimInfo.maxCG, trimInfo.max, trimInfo.min, selectedCG, trimInfo.interpolation);
+        const trim =  myTrim.toString();
         const thrRed = airportDetails?.elevation + 1500
         const thrAcc = noise?.value === "no" ? airportDetails?.elevation + 1500 : airportDetails?.elevation + 2500
         const engOut = thrAcc // Calcular el valor de engOut, placeholder
+
+        console.log(trim);
         
         
         const vconf = calculateV(formData, false);

@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import HighlightButton from '../UI/buttons/highlight-button';
+import { calculateTrim } from '../utils/aircraftV';
 
 export default function Welcome() {
     const [isMounted, setIsMounted] = useState<boolean>(false);

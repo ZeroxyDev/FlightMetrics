@@ -65,3 +65,35 @@ export function f2corr(f: number, a: number) {
 export function distfrom5(x: number) {
     return x - round5down(x);
 }
+
+
+/**
+ * Calculates the trim value based on the given parameters and speed.
+ *
+ * @param {number} keyInicial - The initial key value
+ * @param {number} keyMaximo - The maximum key value
+ * @param {number} valorInicial - The initial value
+ * @param {number} valorMaximo - The maximum value
+ * @param {number} punto - The point value
+ * @param {number} [speed=1] - The speed value (default is 1)
+ * @return {string} The calculated trim value rounded to one decimal place
+ */
+export function calculateTrim(keyInicial: number, keyMaximo: number, valorInicial: number, valorMaximo: number, punto: number, speed = 1) {
+    // Normalizamos la velocidad para asegurarnos de que esté entre 0 y 2
+    const velocidadNormalizada = Math.max(0, Math.min(2, speed));
+
+    // Calculamos la proporción en función de la velocidad
+    const proporcion = velocidadNormalizada === 0 ? 0 : Math.pow((punto - keyInicial) / (keyMaximo - keyInicial), (1 / Math.pow(speed, speed)) / velocidadNormalizada);
+
+    // Calculamos el valor correspondiente en esa proporción entre los valores inicial y máximo
+    const valorCalculado = valorInicial + proporcion * (valorMaximo - valorInicial);
+
+    const valorFinal = parseFloat(valorCalculado.toFixed(1));
+
+    if (valorFinal >= 0) {
+        return `UP${valorFinal.toFixed(1).replace("+", "")}`
+    }else {
+        return `DN${valorFinal.toFixed(1).replace("-", "")}`
+    }
+}
+

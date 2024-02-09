@@ -10,15 +10,16 @@ import { useEffect } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 
-useEffect(() => {
-  document.addEventListener('contextmenu', event => event.preventDefault());
-}, []);
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  useEffect(() => {
+    document.addEventListener('contextmenu', event => event.preventDefault());
+  }, []);
+  
   return (
     <html lang="en">
       <body className={"rounded-[40px] m-0 bg-transparent overflow-hidden"}>

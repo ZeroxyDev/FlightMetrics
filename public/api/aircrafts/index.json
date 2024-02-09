@@ -1,0 +1,22 @@
+[
+    {
+        "type": "A319-132",
+        "label": "Airbus A319"
+    },
+    {
+        "type": "A320-214",
+        "label": "Airbus A320"
+    },
+    {
+        "type": "A320-251N",
+        "label": "Airbus A320neo"
+    },
+    {
+        "type": "A321-211",
+        "label": "Airbus A321"
+    },
+    {
+        "type": "A330-243",
+        "label": "Airbus A330"
+    }
+]

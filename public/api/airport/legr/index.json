@@ -1,0 +1,17 @@
+{
+  "ICAO": "LEGR",
+  "elevation": 12,
+  "transitionAltitude": 7000,
+  "runways": [
+    {
+      "name": "09",
+      "length": 3015,
+      "heading": 92
+    },
+    {
+      "name": "27",
+      "length": 3015,
+      "heading": 272
+    }
+  ]
+}

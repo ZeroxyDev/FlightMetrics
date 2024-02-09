@@ -1,0 +1,38 @@
+[
+    {
+        "ICAO": "LEBL",
+        "name": "Barcelona Airport"
+    },
+    {
+        "ICAO": "LEMD",
+        "name": "Adolfo Suárez Madrid–Barajas Airport"
+    },
+    {
+        "ICAO": "LEVC",
+        "name": "Alicante–Elche Miguel Hernández Airport"
+    },
+    {
+        "ICAO": "LEZL",
+        "name": "Seville Airport"
+    },
+    {
+        "ICAO": "LEMG",
+        "name": "Málaga Airport"
+    },
+    {
+        "ICAO": "LEIB",
+        "name": "Ibiza Airport"
+    },
+    {
+        "ICAO": "LEPA",
+        "name": "Palma de Mallorca Airport"
+    },
+    {
+        "ICAO": "LEGR",
+        "name": "Granada Airport"
+    },
+    {
+        "ICAO": "LEAL",
+        "name": "Alicante Airport"
+    }
+]

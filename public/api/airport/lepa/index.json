@@ -1,0 +1,28 @@
+{
+    "ICAO": "LEPA",
+    "elevation": 7,
+    "transitionAltitude": 6000,
+    "runways": [
+      {
+        "name": "06L",
+        "length": 3300,
+        "heading": 60
+      },
+      {
+        "name": "06R",
+        "length": 3000,
+        "heading": 60
+      },
+      {
+        "name": "24L",
+        "length": 3000,
+        "heading": 240
+      },
+      {
+        "name": "24R",
+        "length": 3300,
+        "heading": 240
+      }
+    ]
+  }
+  

@@ -1,0 +1,110 @@
+{
+    "type": "A321-211",
+    "info": {
+        "manufacturer": "Airbus",
+        "model": "A321",
+        "engines": [{
+            "type": "Jet engine",
+            "model": "CFM International CFM56-5B3/P",
+            "thrust": "133 kN"
+        }],
+        "dimensions": {
+            "length": "44.51 m",
+            "wingspan": "35.80 m",
+            "height": "11.76 m",
+            "cabinWidth": "3.70 m",
+            "wingArea": "122.4 m²"
+        },
+        "weight": {
+            "empty": "48,500 kg",
+            "maxTakeoff": "89,000 kg",
+            "maxLanding": "77,000 kg"
+        },
+        "fuelCapacity": {
+            "mainTanks": "30,030 L",
+            "centerTank": "12,220 L"
+        },
+        "flapConfigurations": [{
+                "type": "Takeoff",
+                "options": ["1", "1+F", "2"]
+            },
+            {
+                "type": "Approach",
+                "options": ["1", "2", "3"]
+            },
+            {
+                "type": "Landing",
+                "options": ["Full", "3"]
+            }
+        ],
+        "features": {
+            "antiIce": ["Engine", "Wings", "Tail"],
+            "airConditioning": true
+        },
+        "temperatureFactor": 32,
+        "speeds": {
+            "flapsRetr": {
+              "50": 133,
+              "55": 135,
+              "60": 139,
+              "65": 144,
+              "70": 149,
+              "75": 155,
+              "80": 161,
+              "85": 167,
+              "90": 173,
+              "95": 180
+            },
+            "slatsRetr": {
+              "50": 146,
+              "55": 148,
+              "60": 150,
+              "65": 153,
+              "70": 156,
+              "75": 160,
+              "80": 164,
+              "85": 169,
+              "90": 174,
+              "95": 180
+            },
+            "VSpeeds": {
+              "1": {
+                "50": 127,
+                "55": 129,
+                "60": 132,
+                "65": 136,
+                "70": 141,
+                "75": 147,
+                "80": 153,
+                "85": 160,
+                "90": 167
+              },
+              "2": {
+                "50": 126,
+                "55": 128,
+                "60": 131,
+                "65": 134,
+                "70": 138,
+                "75": 143,
+                "80": 149,
+                "85": 155,
+                "90": 162
+              },
+              "3": {
+                "50": 125,
+                "55": 127,
+                "60": 129,
+                "65": 133,
+                "70": 137,
+                "75": 142,
+                "80": 147,
+                "85": 153,
+                "90": 159
+              }
+            }
+          }
+          
+          
+          
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "ICAO": "LEAL",
+  "elevation": 43,
+  "transitionAltitude": 6000,
+  "runways": [
+    {
+      "name": "10",
+      "length": 3000,
+      "heading": 100
+    },
+    {
+      "name": "28",
+      "length": 3000,
+      "heading": 280
+    }
+  ]
+}

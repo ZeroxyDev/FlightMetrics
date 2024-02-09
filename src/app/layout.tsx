@@ -5,10 +5,14 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Titlebar from "./components/titlebar";
 import { MCDUContextProvider } from "./context/mcduContext";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 
+useEffect(() => {
+  document.addEventListener('contextmenu', event => event.preventDefault());
+}, []);
 
 export default function RootLayout({
   children,

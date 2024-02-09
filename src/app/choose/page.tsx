@@ -389,7 +389,7 @@ useEffect(() => {
     const renderStep = () => {
         switch (actualStep) {
             case 0:
-                return createInputOptionText('Enter your airport ICAO', airportICAO.toUpperCase(), setAirportICAO, 'airport', true, "Enter your airport name.", "Enter your airport ICAO.");
+                return createInputOptionText('Enter your airport ICAO', airportICAO.toUpperCase(), setAirportICAO, 'airport', true, "Enter your airport ICAO code.", "Enter your airport ICAO.");
  /*                return createSelect('Select your airport', selectedAirport, airportOptions, setSelectedAirport, false, true, "Choose an airport to take flight from."); */
             case 1:
                 return createSelect('Select your runway', selectedRunway, runwayOptions, setSelectedRunway, false, true, "Choose your runway to take flight from.");

@@ -16,6 +16,10 @@ export async function fetchLocalAPI(route: string): Promise<any> {
     return await fileContent.json();
 }
 
+export async function fetchExternalAPI(url: string) {
+    return fetch(url).then((response) => response.json());
+}
+
 // Función para verificar si la ruta existe
 export async function isValidRoute(route: string): Promise<boolean> {
     const jsonFilePath = getJSONFilePath(route);
@@ -26,5 +30,6 @@ export async function isValidRoute(route: string): Promise<boolean> {
         return false;
     }
 }
+
 
 

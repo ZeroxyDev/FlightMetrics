@@ -8,7 +8,7 @@ export default function Result() {
 
     const router = useRouter();
     return (
-        <div className="w-[80%] flex-col aspect-square h-full flex justify-center items-center">
+        <div className="w-[80%] max-w-[500px] flex-col aspect-square h-full flex justify-center items-center">
             <MCDU></MCDU>
             <Button text="New Flight" handleFunction={function (): void {
                 router.push("/choose")

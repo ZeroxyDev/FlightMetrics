@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { fetchLocalAPI } from '../utils/API';
+import { fetchExternalAPI, fetchLocalAPI } from '../utils/API';
 import { calculateFlexTemp, calculateV, calculateV1, calculateVR, calculatev2 } from '../core/calculation';
 import { useMCDU } from '../context/mcduContext';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import Button from '../UI/buttons/button';
 import InProgress from '../UI/progress/in-progress';
 import { colourStyles } from '../UI/style/select-styles';
+import { TransformedObject, transformAirportObject } from '../utils/convert';
 
 
 interface SelectType {
@@ -49,6 +50,9 @@ export default function Calculate() {
     const [selectedTemperature, setSelectedTemperature] = useState<number>(0);
     const [selectedWindDeg, setSelectedWindDeg] = useState<number>(0);
     const [selectedWindKt, setSelectedWindKt] = useState<number>(0);
+    const [selectedTransAlt, setSelectedTransAlt] = useState<number>(0);
+    const [airportICAO, setAirportICAO] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [noise, setNoise] = useState<SelectType | null>(null); 
     const [noiseOptions, setNoiseOptions] = useState<SelectType[]>([
@@ -65,15 +69,9 @@ export default function Calculate() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const [airportData, aircraftData] = await Promise.all([
-                    fetchLocalAPI('airports'),
+                const [aircraftData] = await Promise.all([
                     fetchLocalAPI('aircrafts')
                 ]);
-
-                const airportOptions = airportData.map((airport: any) => ({
-                    value: airport.ICAO,
-                    label: `${airport.name} (${airport.ICAO})`
-                }));
 
                 const aircraftOptions = aircraftData.map((aircraft: any) => ({
                     value: aircraft.type,
@@ -89,25 +87,6 @@ export default function Calculate() {
 
         fetchData();
     }, []);
-
-    useEffect(() => {
-        async function fetchAirportDetails() {
-            if (selectedAirport) {
-                try {
-                    const response = await fetchLocalAPI(`airport/${(selectedAirport.value).toLowerCase()}`);
-                    setAirportDetails(response);
-                    setRunwayOptions(response.runways.map((runway: any) => ({
-                        value: runway.id,
-                        label: runway.name
-                    })));
-                } catch (error) {
-                    console.error('Error fetching airport details:', error);
-                }
-            }
-        }
-
-        fetchAirportDetails();
-    }, [selectedAirport]);
 
     useEffect(() => {
         async function fetchAircraftDetails() {
@@ -135,7 +114,42 @@ export default function Calculate() {
         fetchAircraftDetails();
     }, [aircraftType]);
 
-    const handleNextStep = () => {
+    async function checkandsetICAO() {
+        if (actualStep === 0) {
+            setLoading(true);
+            setSelectedAirport({
+                value: airportICAO.toUpperCase(),
+                label: `${airportICAO}`
+            });
+            try {
+                const responseExternal = await fetchExternalAPI(`https://raw.githubusercontent.com/zeroxydev/runways-db/main/icao/${(airportICAO.toUpperCase())}.json`);
+                    // Transformar el objeto de ejemplo
+                    let transformedAirportObject: TransformedObject = transformAirportObject({
+                        ...responseExternal
+                    });
+                    setIsReadyToProceed(true);
+                    setAirportDetails(transformedAirportObject);
+                    setRunwayOptions(transformedAirportObject.runways.map((runway: any) => ({
+                        value: runway.id,
+                        label: runway.name
+                    })));
+                    setLoading(false);
+
+                    console.log(responseExternal);
+                    return true;
+            } catch (error) {
+                setShowAlert('Invalid ICAO code');   
+                setLoading(false);
+                return false
+            }
+        }
+    }
+
+    const handleNextStep = async () => {
+
+        if(actualStep === 0 && ! await checkandsetICAO()) return
+
+
         setShowAlert(null);
         if (isReadyToProceed) {
             setActualStep(prevStep => prevStep + 1);
@@ -182,6 +196,7 @@ export default function Calculate() {
                 temperature: selectedTemperature,
                 windDirection: selectedWindDeg,
                 windSpeed: selectedWindKt,
+                transitionAlt: selectedTransAlt,
             },
             // Puedes incluir más secciones según sea necesario
         };
@@ -197,7 +212,7 @@ export default function Calculate() {
 
         const trim = await calculateTrim
         const thrRed = airportDetails?.elevation + 1500
-        const thrAcc = !noise ? airportDetails?.elevation + 1500 : airportDetails?.elevation + 2500
+        const thrAcc = noise?.value === "no" ? airportDetails?.elevation + 1500 : airportDetails?.elevation + 2500
         const engOut = thrAcc // Calcular el valor de engOut, placeholder
         
         
@@ -215,7 +230,7 @@ export default function Calculate() {
             "thrRed": thrRed,
             "thrAcc": thrAcc,
             "engOut": engOut,
-            "transitionAltitude": airportDetails?.transitionAltitude,
+            "transitionAltitude": selectedTransAlt,
             "flpretr": vconf.flaps,
             "slrretr": vconf.slats,
             "clean": vconf.clean,
@@ -311,35 +326,68 @@ useEffect(() => {
         );
     };
 
+
+    const createInputOptionText = (label: string, value: string, handleChange: (newValue: string) => void, unit: string, required: boolean, desc?: string, placeholder?: string) => {
+        
+        return (
+            <div className="col-span-2 flex justify-center items-center flex-col w-full gap-2">
+               
+                <div className='flex justify-center items-center'>
+                {actualStep !== 0 && <button className='transition h-fit mr-4 duration-300 border border-tertiary bg-button hover:bg-buttonHover text-white py-2 px-2 rounded-[20px] text-center' onClick={handlePrevStep}><IoIosArrowBack /></button>}
+                <label className='text-[30px] w-full text-center'>{label}{/* {required && <span className="text-red-500">*</span>} */}</label>
+                </div>
+
+                <label className='text-[15px] text-[#888888] w-full text-center'>{desc}</label>
+                <div className='mt-4 w-[70%] mb-4'>
+                    <input
+                        value={value?.toString() ? value?.toString() : ''}
+                        onChange={(e) => {
+                            handleChange(e.target.value);
+                        }}
+                        id={`selected${label}`}
+                        type='text'
+                        placeholder={placeholder || 'Enter anything...'}
+                        className='border outline-none rounded-[20px] border-tertiary w-full bg-button hover:bg-buttonHover text-white py-2 px-4 text-center'
+                    />
+                     {showAlert && <div className='text-[#888888] mt-4 text-center text-sm '>{showAlert}</div>}
+                </div>
+            </div>
+        );
+    };
+
+
+
     const checkRequiredAnswers = () => {
         switch (actualStep) {
             case 0:
-                return selectedAirport !== null;
+                return airportICAO !== null;
             case 1:
                 return selectedRunway !== null;
             case 2:
                 return runwayCondition !== null;
             case 3:
-                return aircraftType !== null;
+                return selectedTransAlt >= 0 && selectedTransAlt <= 20000;
             case 4:
-                return selectedFlapConfig !== null;
+                return aircraftType !== null;
             case 5:
-                return true;
+                return selectedFlapConfig !== null;
             case 6:
-                return hasAirConditioning?.value !== null;
+                return true;
             case 7:
-                return noise !== null;
+                return hasAirConditioning?.value !== null;
             case 8:
-                return selectedGW >= parseInt(aircraftDetails?.info.weight.empty) * 1000 && selectedGW <= parseInt(aircraftDetails?.info.weight.maxTakeoff) * 1000;
+                return noise !== null;
             case 9:
-                return selectedCG >= 8.0 && selectedCG <= 50.0;
+                return selectedGW >= parseInt(aircraftDetails?.info.weight.empty) * 1000 && selectedGW <= parseInt(aircraftDetails?.info.weight.maxTakeoff) * 1000;
             case 10:
-                return selectedQNH >= 800 && selectedQNH <= 1100;
+                return selectedCG >= 8.0 && selectedCG <= 50.0;
             case 11:
-                return selectedTemperature >= -100 && selectedTemperature <= 100;
+                return selectedQNH >= 800 && selectedQNH <= 1100;
             case 12:
-                return (selectedWindDeg >= 0 && selectedWindDeg <= 360)
+                return selectedTemperature >= -100 && selectedTemperature <= 100;
             case 13:
+                return (selectedWindDeg >= 0 && selectedWindDeg <= 360)
+            case 14:
                 return (selectedWindKt >= 0 && selectedWindKt <= 250);
             default:
                 return false;
@@ -350,32 +398,35 @@ useEffect(() => {
     const renderStep = () => {
         switch (actualStep) {
             case 0:
-                return createSelect('Select your airport', selectedAirport, airportOptions, setSelectedAirport, false, true, "Choose an airport to take flight from.");
+                return createInputOptionText('Enter your airport ICAO', airportICAO.toUpperCase(), setAirportICAO, 'airport', true, "Enter your airport name.", "Enter your airport ICAO.");
+ /*                return createSelect('Select your airport', selectedAirport, airportOptions, setSelectedAirport, false, true, "Choose an airport to take flight from."); */
             case 1:
                 return createSelect('Select your runway', selectedRunway, runwayOptions, setSelectedRunway, false, true, "Choose your runway to take flight from.");
             case 2:
                 return createSelect('Select runway condition', runwayCondition, runwayConditionOptions, setRunwayCondition, false, true, "Choose the condition of your runway.");
             case 3:
-                return createSelect('Select your aircraft', aircraftType, aircraftOptions, setAircraftType, false, true, "Choose your aircraft.");
+                return createInputOption('Enter your transition altitude', selectedTransAlt, setSelectedTransAlt, 'transalt', true, "Enter your transition altitude in feet.");
             case 4:
-                return createSelect('Select your Flap Configuration', selectedFlapConfig, flapConfigOptions, setSelectedFlapConfig, false, true, "Choose your flap configuration.");
+                return createSelect('Select your aircraft', aircraftType, aircraftOptions, setAircraftType, false, true, "Choose your aircraft.");
             case 5:
-                return createSelect('Select your Anti-ice ON Type', antiIce, antiIceOptions, setAntiIce, true, false, "Choose your aircraft Anti-ice Type.");
+                return createSelect('Select your Flap Configuration', selectedFlapConfig, flapConfigOptions, setSelectedFlapConfig, false, true, "Choose your flap configuration.");
             case 6:
-                return createSelect('Select your Air Conditioning capability', hasAirConditioning, airConditioningOptions, setHasAirConditioning, false, true, "Choose your aircraft Air Conditioning capability.");
+                return createSelect('Select your Anti-ice ON Type', antiIce, antiIceOptions, setAntiIce, true, false, "Choose your aircraft Anti-ice Type.");
             case 7:
-                return createSelect('Is noise reduction required?', noise, noiseOptions, setNoise, false, true, "Are you requiring noise reduction on your flight?");
+                return createSelect('Select your Air Conditioning capability', hasAirConditioning, airConditioningOptions, setHasAirConditioning, false, true, "Choose your aircraft Air Conditioning capability.");
             case 8:
-                return createInputOption('Select your Gross Weight', selectedGW, setSelectedGW, 'gw', true, "Enter the Gross Weight of your aircraft in kg.");
+                return createSelect('Is noise reduction required?', noise, noiseOptions, setNoise, false, true, "Are you requiring noise reduction on your flight?");
             case 9:
-                return createInputOption('Select your Center of Gravity', selectedCG, setSelectedCG, 'cg', true, "Enter the Center of Gravity of your aircraft.");
+                return createInputOption('Select your Gross Weight', selectedGW, setSelectedGW, 'gw', true, "Enter the Gross Weight of your aircraft in kg.");
             case 10:
-                return createInputOption('Enter QNH (hPa)', selectedQNH, setSelectedQNH, 'qnh', true, "Enter the QNH of your airport in hPa.");
+                return createInputOption('Select your Center of Gravity', selectedCG, setSelectedCG, 'cg', true, "Enter the Center of Gravity of your aircraft.");
             case 11:
-                return createInputOption('Enter Temperature (°C)', selectedTemperature, setSelectedTemperature, 'temperature', true, "Enter the Temperature of your airport in °C.");
+                return createInputOption('Enter QNH (hPa)', selectedQNH, setSelectedQNH, 'qnh', true, "Enter the QNH of your airport in hPa.");
             case 12:
-                return createInputOption('Enter wind deg', selectedWindDeg, setSelectedWindDeg, 'winddeg', true, "Enter the wind direction in degrees.");
+                return createInputOption('Enter Temperature (°C)', selectedTemperature, setSelectedTemperature, 'temperature', true, "Enter the Temperature of your airport in °C.");
             case 13:
+                return createInputOption('Enter wind deg', selectedWindDeg, setSelectedWindDeg, 'winddeg', true, "Enter the wind direction in degrees.");
+            case 14:
                 return createInputOption('Enter wind kt', selectedWindKt, setSelectedWindKt, 'windkt', true, "Enter the wind speed in knots.");
             default:
                 return null;
@@ -389,8 +440,8 @@ useEffect(() => {
                 <div className='z-[100] w-full '>
                 {renderStep()}</div>
                 <div className=' flex justify-center items-center w-full'>
-                {actualStep <= 12 && <Button text="Next" handleFunction={handleNextStep}></Button>}
-                {actualStep > 12 &&  <Button text="Submit" handleFunction={handleSubmit}></Button>}              
+                {actualStep <= 13 && <Button loading={loading} text="Next" handleFunction={handleNextStep}></Button>}
+                {actualStep > 13 &&  <Button loading={loading} text="Submit" handleFunction={handleSubmit}></Button>}              
                 </div>
             </div>
         </div>

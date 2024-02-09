@@ -47,9 +47,9 @@
       "temperatureFactor": 28,
       "trim": {
         "interpolation": 1,
-"maxCG": 41,
+        "maxCG": 41,
         "minCG": 14,
-        "max": 3.5,
+        "max": 3.2,
         "min": -2.5
       },
       "speeds": {

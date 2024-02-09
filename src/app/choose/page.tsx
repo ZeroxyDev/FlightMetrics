@@ -94,7 +94,7 @@ export default function Calculate() {
         async function fetchAirportDetails() {
             if (selectedAirport) {
                 try {
-                    const response = await fetchLocalAPI(`airport/${selectedAirport.value}`);
+                    const response = await fetchLocalAPI(`airport/${(selectedAirport.value).toLowerCase()}`);
                     setAirportDetails(response);
                     setRunwayOptions(response.runways.map((runway: any) => ({
                         value: runway.id,

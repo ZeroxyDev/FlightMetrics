@@ -7,8 +7,8 @@
     "distDir": "../out"
   },
   "package": {
-    "productName": "flightmetrics-a320",
-    "version": "0.1.0"
+    "productName": "FlightMetrics",
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -65,7 +65,15 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "dialog": true,
+      "windows": {
+        "installMode": "passive"
+      },
+      "endpoints": [
+        "https://nesh.app/fmtrics/{{target}}/{{current_version}}"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDRGRjZCNjA2RUJFQTM3RkYKUldUL04rcnJCcmIyVDF4RU50cVdXN3NYUlVCa3Arb3JOeG5PbHlNS3IrOVpvTGc3T21tYTJWSE4K"
     },
     "windows": [
       {

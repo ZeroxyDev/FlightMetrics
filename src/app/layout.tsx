@@ -43,7 +43,6 @@ export default function RootLayout({
         </MCDUContextProvider>
           </div>
       </div>
-      
       </body>
     </html>
   );

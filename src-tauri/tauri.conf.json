@@ -8,11 +8,34 @@
   },
   "package": {
     "productName": "FlightMetrics",
-    "version": "1.0.0"
+    "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
       "all": false,
+      "http": {
+        "all": true,
+        "scope": ["https://**"]
+      },
+      "shell": {
+        "execute": true,
+        "sidecar": true,
+        "open": true
+      },
+      "dialog": {
+        "all": false,
+        "ask": false,
+        "confirm": false,
+        "message": false,
+        "open": false,
+        "save": false
+      },
+      "process": {
+        "all": false,
+        "exit": false,
+        "relaunch": true,
+        "relaunchDangerousAllowSymlinkMacos": false
+      },
       "window": {
         "all": false,
         "close": true,
@@ -22,7 +45,11 @@
         "minimize": true,
         "unmaximize": true,
         "unminimize": true,
-        "startDragging": true
+        "startDragging": true,
+        "setAlwaysOnTop": true
+      },
+      "os": {
+        "all": true
       }
     },
     "bundle": {
@@ -40,7 +67,8 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.zeroxy.dev",
+      "identifier": "com.zeroxy.flightmetrics",
+      "publisher": "Zeroxy Dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -73,7 +101,7 @@
       "endpoints": [
         "https://nesh.app/fmtrics/{{target}}/{{current_version}}"
       ],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDRGRjZCNjA2RUJFQTM3RkYKUldUL04rcnJCcmIyVDF4RU50cVdXN3NYUlVCa3Arb3JOeG5PbHlNS3IrOVpvTGc3T21tYTJWSE4K"
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDgwOTc4MkMzQTc1NzhCQkYKUldTL2kxZW53NEtYZ0dST3RNcG0zNlRqQ2p6ZW11aVo4VmsxTEE1czZGVitlNjhtNmpSNjhqM0cK"
     },
     "windows": [
       {

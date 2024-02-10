@@ -9,6 +9,11 @@ import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
+interface WindowProps extends Window {
+  __TAURI__?: boolean;
+}
+declare const window: WindowProps;
+
 
 export default function RootLayout({
   children,
@@ -20,6 +25,7 @@ export default function RootLayout({
 
   useEffect(() => {
     document.addEventListener('contextmenu', event => event.preventDefault());
+
     if (window?.__TAURI__) {
       console.log('Tauri detected');
       setIsTauri(true);

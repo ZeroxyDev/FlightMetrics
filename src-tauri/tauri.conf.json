@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "FlightMetrics",
-    "version": "0.1.0"
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -16,11 +16,6 @@
       "http": {
         "all": true,
         "scope": ["https://**"]
-      },
-      "shell": {
-        "execute": true,
-        "sidecar": true,
-        "open": true
       },
       "dialog": {
         "all": false,
@@ -49,6 +44,9 @@
         "setAlwaysOnTop": true
       },
       "os": {
+        "all": false
+      },
+      "path": {
         "all": true
       }
     },

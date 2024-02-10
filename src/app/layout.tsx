@@ -43,7 +43,7 @@ export default function RootLayout({
           {children}
         </MCDUContextProvider>
           </div>
-          <Footer/>
+          {isTauri && <Footer/>}
       </div>
       </body>
     </html>

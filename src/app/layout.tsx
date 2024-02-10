@@ -37,7 +37,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`rounded-[40px] m-0 ${isTauri ? 'bg-transparent' : 'bg-background'} overflow-hidden`}>
         <div style={{ height: isTauri ? '600px' : '100vh' }} className={`bg-background w-full ${isTauri ? 'h-[600px]' : 'h-screen'} flex justify-center items-center bordernone border-tertiary rounded-big`}>
-        {isTauri && <div className='h-12 block'><Titlebar /></div>}
+        {isTauri && <div className='h-12 block z-20'><Titlebar /></div>}
         <div className='w-full z-10 flex justify-center items-center h-full '>
         <MCDUContextProvider>
           {children}

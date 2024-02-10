@@ -6,7 +6,7 @@ export default function Footer() {
     const version = packageJson.version; // TODO: Get version from package.json
 
     return (
-        <div className="w-full z-0 fixed px-5 h-full bottom-0 flex justify-between p-4 items-end">
+        <div className="w-full z-0 fixed px-10 h-full bottom-0 flex justify-between pb-8 items-end">
             <div className="flex justify-between w-full items-center">
             <span className="text-tertiary">v{version}</span>
             <Link href={"https://github.com/ZeroxyDev"} className="text-primary text-sm">

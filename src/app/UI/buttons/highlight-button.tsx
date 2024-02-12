@@ -1,6 +1,6 @@
 export default function HighlightButton({handleFunction, text, loading}: ButtonProps) {
     return (
-        <button onClick={handleFunction} className="relative hover:scale-105 transition-all duration-[.8s] group mt-6 overflow-hidden px-6 h-12 rounded-full flex space-x-2 animate-gradient bg-[length:200%_auto]  items-center bg-[linear-gradient(to_right,#e0e0e0,#b4b4b4,#e0e0e0,#7c7c7c,#b4b4b4,#e0e0e0)]" style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.3))' }}>
+        <button onClick={handleFunction} className="relative hover:scale-105 transition-all duration-[.8s] group mt-6 overflow-hidden px-6 h-12 rounded-full flex space-x-2 animate-gradient bg-[length:200%_auto]  items-center bg-plate" style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.3))' }}>
         <span className="relative text-sm text-black font-bold">{text}</span>
         <div className="flex items-center -space-x-3 translate-x-3">
             <div className="w-2.5 h-[1.6px] rounded bg-black origin-left scale-x-0 transition duration-[.8s] group-hover:scale-x-100"></div>

@@ -18,7 +18,7 @@ export default function Welcome() {
 
     return (
 <div className={`text-center flex justify-center items-center flex-col h-full w-full ${isMounted ? 'opacity-100 transform scale-100 transition-all duration-1000' : 'opacity-0 transform scale-95'}`}>
-    <h1 style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.2))' }} className="text-5xl max-w-[500px] font-bold bg-[length:200%_auto] p-2 animate-gradient bg-clip-text text-transparent bg-[linear-gradient(to_right,#e0e0e0,#b4b4b4,#e0e0e0,#7c7c7c,#b4b4b4,#e0e0e0)]">
+    <h1 style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.2))' }} className="text-5xl max-w-[500px] font-bold bg-[length:200%_auto] p-2 animate-gradient bg-clip-text text-transparent bg-plate">
         Welcome to Flight Metrics
     </h1>
     <p className=" max-w-[600px] mt-2 italic text-sm text-[#7c7c7c]">

@@ -13,15 +13,20 @@ export default function Dashboard() {
 
     const { simbriefSettings } = useSimbrief();
     const data = simbriefSettings
+
+    if (!data) {
+        return <div>Loading...</div>
+    }
+
     const arrival = {
-        lat: data.destination.pos_lat,
-        long: data.destination.pos_long
+        lat: data?.destination?.pos_lat,
+        long: data?.destination?.pos_long
     }
     const origin = {
-        lat: data.origin.pos_lat,
-        long: data.origin.pos_long
+        lat: data?.origin?.pos_lat,
+        long: data?.origin?.pos_long
     }
-    return <main className="flex h-full w-full flex-col ">
+    return <main className="flex rounded-t-big h-full w-full flex-col ">
         <div className="flex justify-start items-start">
             {data?.crew?.cpt}
         </div>

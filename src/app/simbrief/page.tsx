@@ -39,6 +39,10 @@ export default function Simbrief() {
         const metar = parseMETARResponse(data?.origin.metar)
         setMetar(metar)
     }, [])
+
+    if (!data) {
+        return <div>Loading...</div>
+    }
     const arrival = {
         lat: data?.destination?.pos_lat,
         long: data?.destination?.pos_long
@@ -48,10 +52,7 @@ export default function Simbrief() {
         long: data?.origin?.pos_long
     }
 
-
-
-
-    return <main className="flex font-mono p-4 h-full justify-center items-center bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#ffffff10_1px)] bg-[size:20px_20px] flex-col overflow-x-hidden relative w-full ">
+    return <main className="flex rounded-t-big font-mono p-4 h-full justify-center items-center bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#ffffff10_1px)] bg-[size:20px_20px] flex-col overflow-x-hidden relative w-full ">
 
         <div className="scale-75 mt-[-100px] xl:scale-100 h-[85%] xl:h-1/1 xl:mb-4 overflow-hidden flex rounded-[40px] justify-start w-full border-tertiary items-start">
         <Cobe originCords={arrival} arrivalCords={origin} />

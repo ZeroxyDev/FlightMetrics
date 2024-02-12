@@ -71,7 +71,7 @@ export default function Simbrief() {
           </div>
 
           <div className="grid bg-[#141414a4] border border-[#272727] rounded-3xl p-4" style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.05))' }}>
-          <div> <span className="font-bold text-[30px] h-fit border-b border-[#272727] pb-2">Airplane</span>
+          <div> <span className="font-bold text-[30px] h-fit border-b border-[#272727] pb-2">Aircraft</span>
       
           <img src={`/images/aircrafts/${data?.aircraft?.base_type || 'A20N'}.png`} alt="Simbrief logo" width={300} height={300} /></div>
           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Type </span> <span>A20N</span></div>

@@ -174,7 +174,7 @@ export default function Calculate() {
 
         setAirportICAO(simbriefData.icao);
         setSelectedRunway({label: simbriefData.runway, value: simbriefData.runway});
-        setSelectedGW(weights.est_zfw);
+        setSelectedGW(weights.est_tow);
         setSelectedTransAlt(origin.trans_alt);
 
         convertAircraftModel(aircraft.base_type).then((type) => {

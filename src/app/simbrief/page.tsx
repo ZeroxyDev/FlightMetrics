@@ -30,19 +30,23 @@ export default function Simbrief() {
     const [metar, setMetar] = useState({} as any);
     const router = useRouter()
 
+
+
+    useEffect(() => {
+        if(data){
+            convertAircraftModel(data?.aircraft?.base_type).then((type) => {
+                fetchLocalAPI(`aircraft/${type?.type}`).then((data) => {
+                    setAircraftData(data)
+                })
+            })
+            const metar = parseMETARResponse(data?.origin?.metar)
+            setMetar(metar)
+        }
+    }, [])
+
     if (!data) {
         return <div><ErrorItem errorCode="x0005"></ErrorItem></div>
     }
-
-    useEffect(() => {
-        convertAircraftModel(data?.aircraft?.base_type).then((type) => {
-            fetchLocalAPI(`aircraft/${type?.type}`).then((data) => {
-                setAircraftData(data)
-            })
-        })
-        const metar = parseMETARResponse(data?.origin?.metar)
-        setMetar(metar)
-    }, [])
 
  
     const arrival = {

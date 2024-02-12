@@ -115,7 +115,7 @@ export default function Simbrief() {
            <span className="font-bold text-[30px] h-fit border-b border-[#272727] pb-2">Loadsheet</span>
            <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Enroute Burn </span> <span>{formatNumberToThousands(data?.general?.total_burn)} kg</span></div>
            <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Passengers </span> <span>{formatNumberToThousands(data?.general?.passengers)}</span></div>
-           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Passenger  .</span> <span>{formatNumberToThousands(data?.weights?.pax_weight)} kg</span></div>
+           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Passgr. (avg/wgt)</span> <span>{formatNumberToThousands(data?.weights?.pax_weight)} kg</span></div>
            <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Tow </span> <span>{formatNumberToThousands(data?.weights?.est_tow)} kg</span></div>
            <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold items-center  gap-2">Block Fuel </span> <span>{formatNumberToThousands(data?.fuel?.plan_ramp)} kg</span></div>
            <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold items-center  gap-2">Takeoff Fuel </span> <span>{formatNumberToThousands(data?.fuel?.plan_takeoff)} kg</span></div>

@@ -83,7 +83,7 @@ export function calculateV(data: any, isConf3: boolean) {
     }
 
     var fl = f[cm](m, v);
-    var sl = s[cm](m, v);
+    var sl = s[cm](m, st);
     var clean = _compensateForMachEffect(_computeGD(m), data.airport.elevation);
 
     // Ajustar la masa de aviones muy grandes

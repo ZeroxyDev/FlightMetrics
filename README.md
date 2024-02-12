@@ -187,6 +187,7 @@ Project Link: [https://github.com/ZeroxyDev/flightmetrics](https://github.com/Ze
 - [GitHub Pages](https://pages.github.com)
 - [Font Awesome](https://fontawesome.com)
 - [React Icons](https://react-icons.github.io/react-icons/search)
+- [FlyByWire Sim](https://flybywiresim.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

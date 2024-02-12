@@ -1,8 +1,8 @@
 
-export default function Button( {handleFunction, text, loading}: ButtonProps) {
+export default function ButtonHigh( {handleFunction, text, loading}: ButtonProps) {
     return (
-        <button onClick={handleFunction} className="relative z-[1] border-2 border-[#333333e5] bg-[#202020e5] w-[40%] hover:w-[50%] justify-center hover:scale-1 transition-all duration-[.8s] group  overflow-hidden h-12 rounded-full flex space-x-2  items-center " style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.1))' }}>
-                    <div className='flex  rounded-big  justify-center items-center'>
+        <button onClick={handleFunction} className="relative z-[1] bg-gray-900 w-[40%] hover:w-[50%] justify-center hover:scale-1 transition-all duration-[.8s] group  overflow-hidden h-12 rounded-full flex space-x-2 animate-gradient bg-[length:200%_auto] items-center bg-[linear-gradient(to_right,theme(colors.indigo.400),theme(colors.indigo.100),theme(colors.sky.400),theme(colors.fuchsia.400),theme(colors.sky.400),theme(colors.indigo.100),theme(colors.indigo.400))] " style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.1))' }}>
+                    <div className='flex bg-[#000000e5]  w-[98%] h-[84%] rounded-big  justify-center items-center'>
                     {!loading && <span className="relative text-sm text-white font-bold">{text}</span>}
                    
                     {loading && <div

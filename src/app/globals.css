@@ -27,3 +27,27 @@ color: aliceblue;
   }
 }
 
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  border-radius: 9999px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #242424;
+  border-radius: 9999px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #575757;
+  border-radius: 9999px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #575757;
+  border-radius: 9999px;
+}

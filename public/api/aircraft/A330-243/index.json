@@ -20,7 +20,8 @@
       "weight": {
         "empty": "124,500 kg",
         "maxTakeoff": "242,000 kg",
-        "maxLanding": "193,000 kg"
+        "maxLanding": "193,000 kg",
+        "maxMZFW": "171,400 kg"
       },
       "fuelCapacity": {
         "mainTanks": "97,530 L",
@@ -55,7 +56,7 @@
         "antiIce": ["Engine", "Wings", "Tail"],
         "airConditioning": true
     },
-    "temperatureFactor": 35,
+    "temperatureFactor": 45,
     "trim": {
       "interpolation": 1,
       "maxCG": 40,

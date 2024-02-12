@@ -7,6 +7,7 @@ import Titlebar from "./components/titlebar";
 import { MCDUContextProvider } from "./context/mcduContext";
 import { useEffect, useState } from "react";
 import Footer from "./components/footer";
+import { SimbriefContextProvider } from "./context/simbriefContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,13 +36,15 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`rounded-[40px] m-0 ${isTauri ? 'bg-transparent' : 'bg-background'} overflow-hidden`}>
-        <div style={{ height: isTauri ? '600px' : '100vh' }} className={`bg-background w-full ${isTauri ? 'h-[600px]' : 'h-screen'} flex justify-center items-center bordernone border-tertiary rounded-big`}>
+      <body className={`rounded-[40px]  m-0 ${isTauri ? 'bg-transparent' : 'bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#ffffff10_1px)] bg-[size:20px_20px]'} overflow-hidden`}>
+        <div style={{ height: isTauri ? '700px' : '100vh' }} className={`bg-[#000000] bg-[radial-gradient(#ffffff20_1px,#ffffff10_1px)] bg-[size:20px_20px] w-full ${isTauri ? 'h-[600px]' : 'h-screen'} flex justify-center items-center bordernone border-tertiary rounded-big`}>
         {isTauri && <div className='h-12 block z-20'><Titlebar /></div>}
         <div className='w-full z-10 flex justify-center items-center h-full '>
+          <SimbriefContextProvider>
         <MCDUContextProvider>
           {children}
         </MCDUContextProvider>
+        </SimbriefContextProvider> 
           </div>
           {isTauri && <Footer/>}
       </div>

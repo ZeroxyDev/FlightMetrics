@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import { fetchExternalAPI, fetchLocalAPI } from '../utils/API';
+import { fetchExternalAPI, fetchLocalAPI, fetchMetar, fetchSimbrief } from '../utils/API';
 import { calculateFlexTemp, calculateV, calculateV1, calculateVR, calculatev2 } from '../core/calculation';
 import { useMCDU } from '../context/mcduContext';
 import { useRouter } from 'next/navigation';
@@ -9,8 +9,10 @@ import { IoIosArrowBack } from "react-icons/io";
 import Button from '../UI/buttons/button';
 import InProgress from '../UI/progress/in-progress';
 import { colourStyles } from '../UI/style/select-styles';
-import { transformAirportObject } from '../utils/convert';
+import { convertAircraftModel, transformAirportObject } from '../utils/convert';
 import { calculateTrim } from '../utils/aircraftV';
+import generalSettings from '@/config/general';
+import { useSimbrief } from '../context/simbriefContext';
 
 export default function Calculate() {
     const [selectedAirport, setSelectedAirport] = useState<SelectType | null>(null);
@@ -22,7 +24,7 @@ export default function Calculate() {
     const [antiIce, setAntiIce] = useState<SelectType | null>(null);
     const [antiIceOptions, setAntiIceOptions] = useState<SelectType[]>([]);
     const [hasAirConditioning, setHasAirConditioning] =  useState<SelectType | null>(null);
-    const [actualStep, setActualStep] = useState<number>(0);
+    const [actualStep, setActualStep] = useState<number>(-2);
     const [airportOptions, setAirportOptions] = useState<SelectType[]>([]);
     const [runwayOptions, setRunwayOptions] = useState<SelectType[]>([]);
     const [aircraftOptions, setAircraftOptions] = useState<SelectType[]>([]);
@@ -40,6 +42,9 @@ export default function Calculate() {
     const [selectedTransAlt, setSelectedTransAlt] = useState<number>(0);
     const [airportICAO, setAirportICAO] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
+
+    const [dataToDashboard, setDataToDashboard] = useState<any>({});
+    const [useSimbriefUser, setuseSimbriefUser] = useState<string>("");
 
     const [noise, setNoise] = useState<SelectType | null>(null); 
     const [noiseOptions, setNoiseOptions] = useState<SelectType[]>([
@@ -75,71 +80,157 @@ export default function Calculate() {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        async function fetchAircraftDetails() {
-            if (aircraftType) {
-                try {
-                    const response = await fetchLocalAPI(`aircraft/${aircraftType.value}`);
-                    setAircraftDetails(response);
-                    setFlapConfigOptions(response.info.flapConfigurations[0].options.map((config: any, index: number) => ({
-                        value: index.toString(),
-                        label: config
-                    })));
-                    if (response.info.features) {
-                        setAntiIceOptions(response.info.features.antiIce.map((antiIce: any) => ({ value: antiIce, label: antiIce })));
-                        if (response.info.features.airConditioning) {
-                            setAirConditioningOptions([{ value: 'on', label: 'On' }, { value: 'off', label: 'Off' }]);
-                        }
-                        setHasAirConditioning(response.info.features.airConditioning);
-                    }
-                } catch (error) {
-                    console.error('Error fetching aircraft details:', error);
+    async function fetchAircraftDetails() {
+        if (aircraftType) {
+            try {
+                const response = await fetchLocalAPI(`aircraft/${aircraftType.value}`);
+                
+                if (useSimbriefUser == "") {
+                    updateSimbriefSettings((prevSettings: any) => ({
+                        origin: { pos_lat: dataToDashboard.origin.pos_lat, pos_long: dataToDashboard.origin.pos_long},
+                        destination: { pos_lat: dataToDashboard.destination.pos_lat, pos_long: dataToDashboard.destination.pos_long},
+                        aircraft: {
+                                base_type: response?.info?.model,
+                                details: response
+                              }
+                          }));      
                 }
+                setAircraftDetails(response);
+                setFlapConfigOptions(response.info.flapConfigurations[0].options.map((config: any, index: number) => ({
+                    value: index.toString(),
+                    label: config
+                })));
+                if (response.info.features) {
+                    setAntiIceOptions(response.info.features.antiIce.map((antiIce: any) => ({ value: antiIce, label: antiIce })));
+                    if (response.info.features.airConditioning) {
+                        setAirConditioningOptions([{ value: 'on', label: 'On' }, { value: 'off', label: 'Off' }]);
+                    }
+                    setHasAirConditioning(response.info.features.airConditioning);
+                }
+            } catch (error) {
+                console.error('Error fetching aircraft details:', error);
             }
         }
-
+    }
+    useEffect(() => {
         fetchAircraftDetails();
     }, [aircraftType]);
 
-    async function checkandsetICAO() {
-        if (actualStep === 0) {
+    async function checkandsetICAO(icao?: string) {
+        if (actualStep === 0 || actualStep === -1) {
             setLoading(true);
             setSelectedAirport({
-                value: airportICAO.toUpperCase(),
-                label: `${airportICAO}`
+                value: icao ? icao : airportICAO.toUpperCase(),
+                label: icao ? icao : `${airportICAO}`
             });
             try {
-                const responseExternal = await fetchExternalAPI(`https://raw.githubusercontent.com/zeroxydev/runways-db/main/icao/${(airportICAO.toUpperCase())}.json`);
+                const responseExternal = await fetchExternalAPI(`https://raw.githubusercontent.com/zeroxydev/runways-db/main/icao/${(icao ? icao : airportICAO.toUpperCase())}.json`);
                     // Transformar el objeto de ejemplo
                     let transformedAirportObject: TransformedObject = transformAirportObject({
                         ...responseExternal
                     });
                     setIsReadyToProceed(true);
                     setAirportDetails(transformedAirportObject);
+                    
+                    setDataToDashboard({origin: { pos_lat: responseExternal.latitude_deg, pos_long: responseExternal.longitude_deg}, destination: { pos_lat: responseExternal.latitude_deg, pos_long: responseExternal.longitude_deg}});
                     setRunwayOptions(transformedAirportObject.runways.map((runway: any) => ({
                         value: runway.id,
                         label: runway.name
                     })));
                     setLoading(false);
-
-                    console.log(responseExternal);
+                    // Setear las variables del METAR si está activo
+                    if (responseExternal && generalSettings.metarAPI) {
+                       const metar = await fetchMetar(icao ? icao : airportICAO.toUpperCase());
+                       if (metar) {
+                           setSelectedQNH(metar.barometer.mb);
+                           setSelectedTemperature(metar.temperature.celsius);
+                           setSelectedWindDeg(metar.wind.degrees);
+                           setSelectedWindKt(metar.wind.speed_kts);
+                       }
+                    }
                     return true;
             } catch (error) {
                 setShowAlert('Invalid ICAO code');   
                 setLoading(false);
+                console.error('Error fetching airport details:', error);
                 return false
             }
         }
     }
 
-    const handleNextStep = async () => {
 
+    async function checkandsetSimbrief() {
+        if (actualStep === -1) {
+        // Setear las variables del METAR si está activo
+        setShowAlert(null);
+        try {
+            const simbriefData = await fetchSimbrief(useSimbriefUser);
+        if (!simbriefData) {
+            setShowAlert('Invalid Simbrief code');
+        }
+        const origin = simbriefData.raw.origin;
+        const weights = simbriefData.raw.weights;
+        const aircraft = simbriefData.raw.aircraft;
+
+        setAirportICAO(simbriefData.icao);
+        setSelectedRunway({label: simbriefData.runway, value: simbriefData.runway});
+        setSelectedGW(weights.est_zfw);
+        setSelectedTransAlt(origin.trans_alt);
+
+        convertAircraftModel(aircraft.base_type).then((type) => {
+            setAircraftType({
+                value: type?.type as string,
+                label: `${type?.type} - ${type?.label}`
+            })    
+        })
+
+        if (simbriefData.icao) {
+            await checkandsetICAO(simbriefData.icao)
+        }
+
+  
+
+        updateSimbriefSettings({ ...simbriefData });
+        setActualStep(5);
+        } catch (error) {
+            setShowAlert('Invalid Simbrief username');
+        }
+        
+        return false
+        }
+    }
+
+
+    const handleNextStep = async (steps = 1) => {
+        setShowAlert(null);
+        if(actualStep === -1 && ! await checkandsetSimbrief()) return
         if(actualStep === 0 && ! await checkandsetICAO()) return
+
+        if (useSimbriefUser !== "") {
+            if (actualStep === 8) {
+
+                if (isReadyToProceed) {
+                    setActualStep(10);
+                } else {
+                    setShowAlert('Please select a valid answer.');
+                }
+                return
+            }
+            if (actualStep === 10) {
+                if (isReadyToProceed) {
+                    await handleSubmit();
+                } else {
+                    setShowAlert('Please select a valid answer.');
+                }
+                return
+            }
+        }
 
 
         setShowAlert(null);
         if (isReadyToProceed) {
-            setActualStep(prevStep => prevStep + 1);
+            setActualStep(prevStep => prevStep + steps);
+            setLoading(false);
         } else {
             setShowAlert('Please select a valid answer.');
         }
@@ -150,12 +241,15 @@ export default function Calculate() {
     };
 
     const { mcduSettings, updateMCDUSettings } = useMCDU();
-
+    const { simbriefSettings, updateSimbriefSettings} = useSimbrief();
     const router = useRouter();
 
 
     const handleSubmit = async () => {
-
+        setTimeout(() => {
+            setLoading(true);
+        }, 100);
+        
         if (!isReadyToProceed) {
             setShowAlert('Please select a valid answer to finish.');
         }
@@ -203,8 +297,6 @@ export default function Calculate() {
         const thrRed = airportDetails?.elevation + 1500
         const thrAcc = noise?.value === "no" ? airportDetails?.elevation + 1500 : airportDetails?.elevation + 2500
         const engOut = thrAcc // Calcular el valor de engOut, placeholder
-
-        console.log(trim);
         
         
         const vconf = calculateV(formData, false);
@@ -231,11 +323,12 @@ export default function Calculate() {
 
         updateMCDUSettings(performance);
 
-        router.push('/result');
-        
-
-        console.log(performance);
-
+        if (useSimbriefUser !== "") {
+            router.push('/simbrief');
+        }else {
+            router.push('/dashboard');
+        }
+        setLoading(false);
     };
     
 
@@ -250,6 +343,7 @@ useEffect(() => {
         <div className="col-span-2 flex justify-center items-center flex-col  w-full gap-2">
                <div className='flex justify-center items-center'>
                 {actualStep !== 0 && <button className='transition h-fit mr-4 duration-300 border border-tertiary bg-button hover:bg-buttonHover text-white py-2 px-2 rounded-[20px] text-center' onClick={handlePrevStep}><IoIosArrowBack /></button>}
+                {actualStep == 0 && <button className='transition h-fit mr-4 duration-300 border border-tertiary bg-button hover:bg-buttonHover text-white py-2 px-2 rounded-[20px] text-center' onClick={() => router.back()}><IoIosArrowBack /></button>}
                 <label className='text-[30px] w-full text-center'>{label}{/* {required && <span className="text-red-500">*</span>} */}</label>
                 </div>
             <label className='text-[15px] text-[#888888] w-full text-center'>{desc}</label>
@@ -295,6 +389,7 @@ useEffect(() => {
                
                 <div className='flex justify-center items-center'>
                 {actualStep !== 0 && <button className='transition h-fit mr-4 duration-300 border border-tertiary bg-button hover:bg-buttonHover text-white py-2 px-2 rounded-[20px] text-center' onClick={handlePrevStep}><IoIosArrowBack /></button>}
+                {actualStep == 0 && <button className='transition h-fit mr-4 duration-300 border border-tertiary bg-button hover:bg-buttonHover text-white py-2 px-2 rounded-[20px] text-center' onClick={() => router.back()}><IoIosArrowBack /></button>}
                 <label className='text-[30px] w-full text-center'>{label}{/* {required && <span className="text-red-500">*</span>} */}</label>
                 </div>
 
@@ -350,6 +445,8 @@ useEffect(() => {
 
     const checkRequiredAnswers = () => {
         switch (actualStep) {
+            case -2: true
+            case -1: true
             case 0:
                 return airportICAO !== null;
             case 1:
@@ -388,6 +485,8 @@ useEffect(() => {
 
     const renderStep = () => {
         switch (actualStep) {
+            case -1:
+                return createInputOptionText('Enter your Simbrief username', useSimbriefUser, setuseSimbriefUser, 'simbrief', true, "Enter your Simbrief username", "Enter your Simbrief username");
             case 0:
                 return createInputOptionText('Enter your airport ICAO', airportICAO.toUpperCase(), setAirportICAO, 'airport', true, "Enter your airport ICAO code.", "Enter your airport ICAO.");
  /*                return createSelect('Select your airport', selectedAirport, airportOptions, setSelectedAirport, false, true, "Choose an airport to take flight from."); */
@@ -426,15 +525,25 @@ useEffect(() => {
 
     return (
         <div className="container flex justify-center items-center flex-col w-screen h-screen mx-auto p-8">
-            <div className="flex-col flex justify-center items-center grid-cols-2 max-w-[500px] w-full gap-4">
+            {actualStep >= -1 && <div className="flex-col flex justify-center items-center grid-cols-2 max-w-[500px] w-full gap-4">
                 <InProgress actualStep={actualStep}></InProgress>
                 <div className='z-[100] w-full '>
                 {renderStep()}</div>
                 <div className=' flex justify-center items-center w-full'>
-                {actualStep <= 13 && <Button loading={loading} text="Next" handleFunction={handleNextStep}></Button>}
-                {actualStep > 13 &&  <Button loading={loading} text="Submit" handleFunction={handleSubmit}></Button>}              
+                {actualStep <= 13 && actualStep > -1 && <Button loading={loading} text="Next" handleFunction={() => handleNextStep(1)}></Button>}
+                {actualStep > 13 &&  <Button loading={loading} text="Submit" handleFunction={handleSubmit}></Button>}     
+                {actualStep === -1 &&  <Button loading={loading} text="Next" handleFunction={() => handleNextStep(1)}></Button>}            
                 </div>
-            </div>
+            </div>}
+
+            {actualStep == -2 && <div className="flex-col flex justify-center items-center grid-cols-2 max-w-[500px] w-full gap-4">
+            <div className='flex justify-center items-center'>
+            {<button className='transition h-fit mr-4 duration-300 border border-tertiary bg-button hover:bg-buttonHover text-white py-2 px-2 rounded-[20px] text-center' onClick={() => router.back()}><IoIosArrowBack /></button>}
+                <label className='text-[30px] w-full text-center mb-2'>Which mode do you want?</label>
+                </div>
+            <Button loading={loading} text="Automatic" handleFunction={() => handleNextStep(1)}></Button>
+            <Button loading={loading} text="Manual" handleFunction={() => handleNextStep(2)}></Button>
+            </div>}
         </div>
     );
 }

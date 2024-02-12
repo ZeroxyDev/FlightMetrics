@@ -2,7 +2,7 @@
     "type": "A320-251N",
     "info": {
         "manufacturer": "Airbus",
-        "model": "A320neo",
+        "model": "A20N",
         "engines": [{
             "type": "Jet engine",
             "model": "CFM International LEAP-1A",
@@ -18,7 +18,8 @@
         "weight": {
             "empty": "42,600 kg",
             "maxTakeoff": "79,000 kg",
-            "maxLanding": "68,000 kg"
+            "maxLanding": "68,000 kg",
+            "maxMZFW": "64,300 kg"
         },
         "fuelCapacity": {
             "mainTanks": "24,210 L",
@@ -41,7 +42,7 @@
             "antiIce": ["Engine", "Wings", "Tail"],
             "airConditioning": true
         },
-        "temperatureFactor": 31,
+        "temperatureFactor": 41,
         "trim": {
           "interpolation": 1,
           "maxCG": 40,

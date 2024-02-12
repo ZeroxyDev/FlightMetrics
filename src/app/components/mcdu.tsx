@@ -1,19 +1,30 @@
 "use client"
 
+// text color  class duplicated to easy change
+
 import { useMCDU } from "../context/mcduContext";
 
 const MCDU = () => {
     const { mcduSettings } = useMCDU();
 
-    console.log(mcduSettings)
+    function removeLeadingZeros(number: any) {
+        // Convertir el número a una cadena
+        let numberString = number.toString();
+    
+        // Eliminar los ceros iniciales utilizando expresiones regulares
+        let trimmedNumber = numberString.replace(/^0+/, '');
+    
+        // Convertir de nuevo la cadena a un número y devolverlo
+        return parseInt(trimmedNumber, 10);
+    }
 
     return (
-        <div className="w-full font-mono flex justify-center items-center">
+        <div className="w-full border rounded-[40px] border-[#1f1f1f] bg-[#0e0e0ea1] p-4 mb-8 font-mono !distext-[#888888] flex justify-center items-center">
             <table className="w-full">
                 <tbody>
                     <tr>
                         <td colSpan={4} className="text-4xl">
-                            <center>TAKE OFF RWY <span className="text-[#04b404]">{mcduSettings.runway}</span></center>
+                            <center>TAKE OFF RWY <span className="text-[#04b404] distext-[#fcfcfc]">{mcduSettings.runway}</span></center>
                         </td>
                     </tr>
                     <tr>
@@ -28,10 +39,10 @@ const MCDU = () => {
                     </tr>
                     <tr>
                         <td className="text-2xl">
-                            <span className="text-[#fe9a2e]">{mcduSettings.V1}</span>
+                            <span className="text-[#fe9a2e] distext-[#fcfcfc]">{mcduSettings.V1}</span>
                         </td>
                         <td className="text-2xl">
-                            F=<span className="text-[#04b404]">{mcduSettings.flpretr}</span>
+                            F=<span className="text-[#04b404] distext-[#fcfcfc]">{mcduSettings.flpretr}</span>
                         </td>
                         <td className="text-2xl"></td>
                     </tr>
@@ -48,13 +59,13 @@ const MCDU = () => {
                     </tr>
                     <tr>
                         <td className="text-2xl">
-                            <span className="text-[#fe9a2e]">{mcduSettings.VR}</span>
+                            <span className="text-[#fe9a2e] distext-[#fcfcfc]">{mcduSettings.VR}</span>
                         </td>
                         <td className="text-2xl" colSpan={2}>
-                            S=<span className="text-[#04b404]">{mcduSettings.slrretr}</span>
+                            S=<span className="text-[#04b404] distext-[#fcfcfc]">{mcduSettings.slrretr}</span>
                         </td>
                         <td className="text-2xl" align="right">
-                            [M]<span className="text-[#2eccfa]">[&nbsp;&nbsp;&nbsp;]*</span>
+                            [M]<span className="text-[#2eccfa] distext-[#fcfcfc]">[&nbsp;&nbsp;&nbsp;]*</span>
                         </td>
                     </tr>
                     <tr>
@@ -70,13 +81,13 @@ const MCDU = () => {
                     </tr>
                     <tr>
                         <td className="text-2xl">
-                            <span className="text-[#fe9a2e]">{mcduSettings.V2}</span>
+                            <span className="text-[#fe9a2e] distext-[#fcfcfc]">{mcduSettings.V2}</span>
                         </td>
                         <td className="text-2xl" colSpan={2}>
-                            O=<span className="text-[#04b404]">{mcduSettings.clean}</span>
+                            O=<span className="text-[#04b404] distext-[#fcfcfc]">{mcduSettings.clean}</span>
                         </td>
                         <td className="text-2xl" align="right">
-                            <span className="text-[#2eccfa]">{mcduSettings.flaps}/{mcduSettings.trim}</span>
+                            <span className="text-[#2eccfa] distext-[#fcfcfc]">{mcduSettings.flaps}/{mcduSettings.trim}</span>
                         </td>
                     </tr>
                     <tr>
@@ -89,10 +100,10 @@ const MCDU = () => {
                     </tr>
                     <tr>
                         <td colSpan={2} className="text-lg">
-                            <span className="text-[#2eccfa]">{mcduSettings.transitionAltitude}</span>
+                            <span className="text-[#2eccfa] distext-[#fcfcfc]">{removeLeadingZeros(mcduSettings.transitionAltitude)}</span>
                         </td>
                         <td colSpan={2} className="text-2xl" align="right">
-                            <span className="text-[#2eccfa]">{mcduSettings.flexTemp}&deg;</span>
+                            <span className="text-[#2eccfa] distext-[#fcfcfc]">{mcduSettings.flexTemp}&deg;</span>
                         </td>
                     </tr>
                     <tr>
@@ -105,10 +116,10 @@ const MCDU = () => {
                     </tr>
                     <tr>
                         <td colSpan={2} className="text-lg">
-                            <span className="text-[#2eccfa]">{mcduSettings.thrRed}/{mcduSettings.thrAcc}</span>
+                            <span className="text-[#2eccfa] distext-[#fcfcfc]">{mcduSettings.thrRed}/{mcduSettings.thrAcc}</span>
                         </td>
                         <td colSpan={2} className="text-lg" align="right">
-                            <span className="text-[#2eccfa]">{mcduSettings.engOut}</span>
+                            <span className="text-[#2eccfa] distext-[#fcfcfc]">{mcduSettings.engOut}</span>
                         </td>
                     </tr>
                     <tr>

@@ -34,9 +34,6 @@ export function calculatev2(data: any) {
     }
 
     const alt = data.airport.elevation;
-
-    console.log(data.aircraft.info.speeds.VSpeeds)
-
     var staticV2 = Math.round((data.aircraft.info.speeds.VSpeeds[fPos][round5down(mass).toString()]))
     if (staticV2 === undefined) {
         staticV2 = Math.round((data.aircraft.info.speeds.VSpeeds[fPos][round10down(mass).toString()]));
@@ -108,8 +105,6 @@ export function calculateV(data: any, isConf3: boolean) {
         slats: Math.round(sl),
         clean: Math.round(clean),
     }
-
-    console.log(object)
     return object;
 
 }
@@ -120,7 +115,9 @@ export function calculateFlexTemp(data: any): number {
     let plusTemp = data.aircraft.info.temperatureFactor; // temperatura adicional por el avion
     
     // Regla 1: Con QNH alto, añadir 1º por cada 0.3 que supere 29.92 (no necesario a nivel del mar)
-    const qnhDifference = data.flightDetails.QNH - 1013;
+    const qnh = data.flightDetails.QNH - 1013;
+    const qnhDifference = qnh * 0.02953;
+
     if (qnhDifference >= 0) {
         flexTemp += (qnhDifference / 0.3); // Añadir 1º por cada 0.3 que supere 29.92
     }

@@ -104,10 +104,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 700,
         "resizable": false,
         "title": "Flight Metrics",
-        "width": 655,
+        "width": 758,
         "decorations": false,
         "transparent": true,
         "visible" : true,

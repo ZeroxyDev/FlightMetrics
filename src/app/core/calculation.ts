@@ -55,12 +55,20 @@ export function calculatev2(data: any) {
  * @param {number} v2 - the input value
  * @return {number} the calculated v1
  */
-export function calculateV1(v2: number) {
-    return v2 - 5
+export function calculateV1(v2: number, factor?: number) {
+    var v1 = v2 - 5
+    if (factor){
+     v1 = v1 - factor
+    }
+    return v1
 }
 
-export function calculateVR(v2: number) {
-    return v2 - 4
+export function calculateVR(v2: number, factor?: number) {
+    var vr = v2 - 4
+    if (factor){
+        vr =  vr - factor
+       }
+    return vr
 }
 
 export function calculateV(data: any, isConf3: boolean) {
@@ -97,8 +105,7 @@ export function calculateV(data: any, isConf3: boolean) {
     // Ajustar la masa general
     fl = Math.round(fl  + 0.1 * Math.min(m - parseInt(m.toString().substring(0, 1))));
     sl = Math.round(sl);
-    clean = Math.round((clean + 0.22 * Math.min(m - parseInt(m.toString().substring(0, 1)))));
-    /*     const slt = vls[0][cm](m, 1); */
+    clean = Math.round((clean /* + 0.22 * Math.min(m - parseInt(m.toString().substring(0, 1))) */));
 
     const object = {
         flaps: Math.round(fl),

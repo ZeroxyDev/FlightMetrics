@@ -284,8 +284,9 @@ export default function Calculate() {
 
     
         const v2 = calculatev2(formData);
-        const v1 = calculateV1(v2);
-        const vr = calculateVR(v2);
+        const v1 = calculateV1(v2, aircraftDetails?.info?.speeds?.VSpeeds?.v1factor);
+        const vr = calculateVR(v2, aircraftDetails?.info?.speeds?.VSpeeds?.vrfactor);
+        console.log(aircraftDetails)
 
 /*         const calculateTrim = fetchLocalAPI('trim/' + aircraftDetails?.type).then((data) => {
             return data[selectedCG.toFixed(1)]

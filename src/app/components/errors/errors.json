@@ -1,0 +1,30 @@
+{
+    "x0000": {
+        "title": "No Results Found",
+        "message": "We couldn't find any results matching your search criteria."
+    },
+    "x0001": {
+        "title": "Access Denied",
+        "message": "You do not have permission to perform this action. Please contact your administrator for assistance."
+    },
+    "x0002": {
+        "title": "Request Unsuccessful",
+        "message": "The request could not be completed at this time. Please try again later."
+    },
+    "x0003": {
+        "title": "Resource Not Found",
+        "message": "The requested resource was not found. Please verify the URL and try again."
+    },
+    "x0004": {
+        "title": "Unexpected Error",
+        "message": "An unexpected error occurred. Please report this issue on GitHub so that we can investigate further."
+    },
+    "x0005": {
+        "title": "SimBrief Username Required",
+        "message": "Please enter your SimBrief username to proceed."
+    },
+    "x0404": {
+        "title": "Page Not Found",
+        "message": "Oops! The page you are looking for could not be found. Please check the URL and try again."
+    }
+}

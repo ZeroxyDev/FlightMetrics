@@ -3,10 +3,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Titlebar from "./components/titlebar";
+import Titlebar from "./components/layout/titlebar";
 import { MCDUContextProvider } from "./context/mcduContext";
 import { useEffect, useState } from "react";
-import Footer from "./components/footer";
+import Footer from "./components/layout/footer";
 import { SimbriefContextProvider } from "./context/simbriefContext";
 
 const inter = Inter({ subsets: ["latin"] });

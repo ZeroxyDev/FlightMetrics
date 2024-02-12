@@ -5,8 +5,9 @@ import createGlobe from "cobe";
 type CobeProps = {
     originCords?: {lat : number, long: number};
     arrivalCords?: {lat : number, long: number};
+    alternateCords?: {lat : number, long: number};
 }
-export function Cobe({ originCords, arrivalCords }: CobeProps) {
+export function Cobe({ originCords, arrivalCords, alternateCords }: CobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef<number>(0);
@@ -36,6 +37,7 @@ export function Cobe({ originCords, arrivalCords }: CobeProps) {
       markers: [
         { location: [originCords?.lat, originCords?.long], size: 0.1},
         { location: [arrivalCords?.lat, arrivalCords?.long], size: 0.1},
+        { location: [alternateCords?.lat, alternateCords?.long], size: 0.05},
       ],
       onRender: (state: { phi: number; width: number; height: number }) => {
         // This prevents rotation while dragging

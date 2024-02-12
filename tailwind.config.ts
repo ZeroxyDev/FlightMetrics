@@ -19,6 +19,7 @@ const config: Config = {
         primary: "#ffffff",
         secondary: "#1e1e1e",
         tertiary: "#484848",
+        quaternary: "#797979",
         button: "#151515",
         buttonHover: "#191919",
         background: "#080808",

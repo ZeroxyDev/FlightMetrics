@@ -42,7 +42,7 @@
             "antiIce": ["Engine", "Wings", "Tail"],
             "airConditioning": true
         },
-        "temperatureFactor": 42,
+        "temperatureFactor": 50,
         "trim": {
           "interpolation": 1,
           "maxCG": 41,
@@ -76,6 +76,8 @@
               "95": 180
             },
             "VSpeeds": {
+              "v1factor": 0,
+              "vrfactor": 0,
               "1": {
                 "50": 127,
                 "55": 129,

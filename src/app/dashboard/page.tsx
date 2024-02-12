@@ -6,6 +6,7 @@ import Button from "../UI/buttons/button";
 import { Cobe } from "../components/cube";
 import { useSimbrief } from "../context/simbriefContext";
 import Image from "next/image";
+import ErrorItem from "../components/errors/errors";
 
 export default function Dashboard() {
 
@@ -14,8 +15,8 @@ export default function Dashboard() {
     const { simbriefSettings } = useSimbrief();
     const data = simbriefSettings
 
-    if (!data) {
-        return <div>Loading...</div>
+    if (!data?.destination) {
+        return <div><ErrorItem errorCode="x0000"></ErrorItem></div>
     }
 
     const arrival = {

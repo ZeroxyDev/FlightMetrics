@@ -1,5 +1,10 @@
 [
     {
+        "base": "A318",
+        "type": "A318-111",
+        "label": "Airbus A318"
+    } ,
+    {
         "base": "A319",
         "type": "A319-132",
         "label": "Airbus A319"
@@ -23,5 +28,5 @@
         "base": "A330",
         "type": "A330-243",
         "label": "Airbus A330"
-    }
+    } 
 ]

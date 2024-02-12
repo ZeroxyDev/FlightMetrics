@@ -111,21 +111,27 @@ export function calculateV(data: any, isConf3: boolean) {
 
 
 export function calculateFlexTemp(data: any): number {
-    let flexTemp = data.airport.temperature; // Temperatura inicial
+    let flexTemp = data.airport.temperature || 15; // Temperatura inicial
     let plusTemp = data.aircraft.info.temperatureFactor; // temperatura adicional por el avion
     
-    // Regla 1: Con QNH alto, añadir 1º por cada 0.3 que supere 29.92 (no necesario a nivel del mar)
-    const qnh = data.flightDetails.QNH - 1013;
-    const qnhDifference = qnh * 0.02953;
+    // Convertir QNH a pulgadas de mercurio
+    const qnhInHg = (data.flightDetails.QNH || 1013) / 33.8639;
 
+    console.log(data)
+
+    // Calcular la diferencia de QNH respecto a 29.92 pulgadas de mercurio
+    const qnhDifference = qnhInHg - 29.92;
+
+    // Regla 1: Con QNH alto, añadir 1º por cada 0.3 que supere 29.92
     if (qnhDifference >= 0) {
-        flexTemp += (qnhDifference / 0.3); // Añadir 1º por cada 0.3 que supere 29.92
+        flexTemp += Math.floor(qnhDifference / 0.3); // Añadir 1º por cada 0.3 que supere 29.92
     }
 
     // Regla 2: Con QNH bajo, restar 1ºC por cada 0.1 pulgadas que haya por debajo de 29.92
     if (qnhDifference < 0) {
-        flexTemp -= (Math.abs(qnhDifference) / 0.1); // Restar 1º por cada 0.1 que esté por debajo de 29.92
+        flexTemp -= Math.floor(Math.abs(qnhDifference) / 0.1); // Restar 1º por cada 0.1 que esté por debajo de 29.92
     }
+
 
     // Regla 3: Con el Engine Anti-ice on, restar 1ºC
     if (data.aircraft?.antiIceType?.includes("Engine")) {

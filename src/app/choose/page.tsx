@@ -537,9 +537,12 @@ useEffect(() => {
             </div>}
 
             {actualStep == -2 && <div className="flex-col flex justify-center items-center grid-cols-2 max-w-[500px] w-full gap-4">
+            <InProgress actualStep={actualStep}></InProgress>
             <div className='flex justify-center items-center'>
+                
             {<button className='transition h-fit mr-4 duration-300 border border-tertiary bg-button hover:bg-buttonHover text-white py-2 px-2 rounded-[20px] text-center' onClick={() => router.back()}><IoIosArrowBack /></button>}
-                <label className='text-[30px] w-full text-center mb-2'>Which mode do you want?</label>
+                <div className='flex justify-center flex-col items-center'> <label className='text-[30px] w-full text-center mb-2'>Which mode do you want?</label>
+                <label className='text-[15px] text-[#888888] w-full text-center'>Select the mode you want to use</label></div>
                 </div>
             <Button loading={loading} text="Automatic" handleFunction={() => handleNextStep(1)}></Button>
             <Button loading={loading} text="Manual" handleFunction={() => handleNextStep(2)}></Button>

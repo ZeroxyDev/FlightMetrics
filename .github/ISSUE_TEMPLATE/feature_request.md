@@ -1,45 +1,19 @@
-name: Feature Request
-description: Suggest a new feature for the installer
-labels: [Enhancement]
-body:
+---
+name: Feature request
+about: Suggest an idea for this project
+title: ""
+labels: ""
+assignees: ""
+---
 
-- type: markdown
-  attributes:
-  value: "# Installer Feature Request Form"
-- type: input
-  id: installer-version
-  attributes:
-  label: Installer Version
-  description: You can find the version info in the settings tab
-  placeholder: ex. v1.2.0
-  validations:
-  required: true
-- type: textarea
-  id: desc
-  attributes:
-  label: Description
-  description: Describe the feature you'd like to see implemented. Is your feature request related to a problem?
-  validations:
-  required: true
-- type: textarea
-  id: references
-  attributes:
-  label: References (optional)
-  description: If applicable, add screenshots or videos to help explain your request.
-  validations:
-  required: false
-- type: textarea
-  id: misc
-  attributes:
-  label: Additional info (optional)
-  description: Add any other context about the feature request here.
-  validations:
-  required: false
-- type: input
-  id: discord
-  attributes:
-  label: Discord Username (optional)
-  description: You may optionally provide your discord username, so that we may contact you directly about the issue.
-  placeholder: ex. username#1234
-  validations:
-  required: false
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
+
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
+
+**Additional context**
+Add any other context or screenshots about the feature request here.

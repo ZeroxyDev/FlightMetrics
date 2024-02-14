@@ -98,6 +98,8 @@ Next, go to the public/api/aircraft/[exact_model_name_folder]/index.json file an
         "80": 214
       },
       "VSpeeds": {
+        "v1factor": 0,
+        "vrfactor": 0,
         "1": {
           "35": 126,
           "40": 126,
@@ -142,4 +144,4 @@ Next, go to the public/api/aircraft/[exact_model_name_folder]/index.json file an
 
 ## Add Aircraft Image
 
-Finally, place the image of the aircraft in the public/images/aircrafts/[model_name.png] directory. The image should follow the design of the existing images and have dimensions of 1719px/519px.
+Finally, place the image of the aircraft in the public/images/aircrafts/[model_name.png] directory. The image should follow the design of the existing images and have dimensions of 1719px/519px, you can use the .psd file.

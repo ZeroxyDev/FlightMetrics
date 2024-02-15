@@ -9,10 +9,12 @@ import { IoIosArrowBack } from "react-icons/io";
 import Button from '../UI/buttons/button';
 import InProgress from '../UI/progress/in-progress';
 import { colourStyles } from '../UI/style/select-styles';
-import { convertAircraftModel, transformAirportObject } from '../utils/convert';
+import { convertAircraftModel, lbsToKg, transformAirportObject } from '../utils/convert';
 import { calculateTrim } from '../utils/aircraftV';
 import generalSettings from '@/config/general';
 import { useSimbrief } from '../context/simbriefContext';
+import { getSetting, getSettings } from '../utils/states';
+import Loading from '../loading';
 
 export default function Calculate() {
     const [selectedAirport, setSelectedAirport] = useState<SelectType | null>(null);
@@ -57,6 +59,31 @@ export default function Calculate() {
         { value: 'dry', label: 'Dry' },
         { value: 'wet', label: 'Wet' }
     ]);
+
+    // Settings variables
+    const [defaultSimbrief, setDefaultSimbrief] = useState(false);
+    const [defaultSimbriefInfo, setDefaultSimbriefInfo] = useState(false);
+    const [defaultLBS, setDefaultLBS] = useState(false);
+    const [defaultMetar, setDefaultMetar] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+        if (typeof window === 'object') {
+            const storedValue = getSettings();
+
+            if (storedValue !== null) {
+                setDefaultSimbrief(storedValue['useSimBriefSwitch'] === 'true');
+                setDefaultSimbriefInfo(storedValue['useInfoViewerSwitch'] === 'true');
+                setDefaultLBS(storedValue['useLBSwitch'] === 'true');
+                setDefaultMetar(storedValue['useMetarSwitch'] === 'true');
+                console.log(storedValue);
+                if (storedValue['useSimBriefSwitch'] === 'true') {
+                    setActualStep(-1);
+                }
+            }
+            setIsLoaded(true);
+        }
+    }, []);
 
     useEffect(() => {
         async function fetchData() {
@@ -139,7 +166,7 @@ export default function Calculate() {
                     })));
                     setLoading(false);
                     // Setear las variables del METAR si está activo
-                    if (responseExternal && generalSettings.metarAPI) {
+                    if (responseExternal && generalSettings.metarAPI && defaultMetar) {
                        const metar = await fetchMetar(icao ? icao : airportICAO.toUpperCase());
                        if (metar) {
                            setSelectedQNH(metar.barometer.mb);
@@ -271,7 +298,7 @@ export default function Calculate() {
                 ...aircraftDetails
             },
             flightDetails: {
-                grossWeight: selectedGW,
+                grossWeight: (!defaultLBS ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) ,
                 centerOfGravity: selectedCG,
                 QNH: selectedQNH,
                 temperature: selectedTemperature,
@@ -325,7 +352,12 @@ export default function Calculate() {
         updateMCDUSettings(performance);
 
         if (useSimbriefUser !== "") {
-            router.push('/simbrief');
+            if (!defaultSimbriefInfo) {
+                router.push('/result');
+            }else {
+                router.push('/simbrief');
+            }
+          
         }else {
             router.push('/dashboard');
         }
@@ -467,7 +499,7 @@ useEffect(() => {
             case 8:
                 return noise !== null;
             case 9:
-                return selectedGW >= parseInt(aircraftDetails?.info.weight.empty) * 1000 && selectedGW <= parseInt(aircraftDetails?.info.weight.maxTakeoff) * 1000;
+                return (!defaultLBS ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) >= parseInt(aircraftDetails?.info.weight.empty) * 1000 && (!defaultLBS ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) <= parseInt(aircraftDetails?.info.weight.maxTakeoff) * 1000;
             case 10:
                 return selectedCG >= 8.0 && selectedCG <= 50.0;
             case 11:
@@ -508,7 +540,7 @@ useEffect(() => {
             case 8:
                 return createSelect('Is noise reduction required?', noise, noiseOptions, setNoise, false, true, "Are you requiring noise reduction on your flight?");
             case 9:
-                return createInputOption('Select your Gross Weight', selectedGW, setSelectedGW, 'gw', true, "Enter the Gross Weight of your aircraft in kg.");
+                return createInputOption('Select your Gross Weight', selectedGW, setSelectedGW, 'gw', true, `Enter the Gross Weight of your aircraft in ${defaultLBS ? "lbs" : "kg"}.`);
             case 10:
                 return createInputOption('Select your Center of Gravity', selectedCG, setSelectedCG, 'cg', true, "Enter the Center of Gravity of your aircraft.");
             case 11:
@@ -525,7 +557,8 @@ useEffect(() => {
     };
 
     return (
-        <div className="container flex justify-center items-center flex-col w-screen h-screen mx-auto p-8">
+     <>
+     {isLoaded ?   <div className="container flex justify-center items-center flex-col w-screen h-screen mx-auto p-8">
             {actualStep >= -1 && <div className="flex-col flex justify-center items-center grid-cols-2 max-w-[500px] w-full gap-4">
                 <InProgress actualStep={actualStep}></InProgress>
                 <div className='z-[100] w-full '>
@@ -548,6 +581,7 @@ useEffect(() => {
             <Button loading={loading} text="Automatic" handleFunction={() => handleNextStep(1)}></Button>
             <Button loading={loading} text="Manual" handleFunction={() => handleNextStep(2)}></Button>
             </div>}
-        </div>
+        </div> : <Loading></Loading>}
+     </>
     );
 }

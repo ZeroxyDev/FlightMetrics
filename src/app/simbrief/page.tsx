@@ -12,11 +12,12 @@ import { FaWind } from "react-icons/fa";
 import { FiType } from "react-icons/fi";
 import Button from "../UI/buttons/button";
 import { fetchLocalAPI } from "../utils/API";
-import { convertAircraftModel, formatNumberToThousands, parseMETARResponse, timestampToDate, timestampToHourAndMinute } from "../utils/convert";
+import { convertAircraftModel, formatNumberToThousands, kgToLbs, parseMETARResponse, timestampToDate, timestampToHourAndMinute } from "../utils/convert";
 import { useEffect, useState } from "react";
 import { useMCDU } from "../context/mcduContext";
 import { useRouter } from "next/navigation";
 import ErrorItem from "../components/errors/errors";
+import { getSettings } from "../utils/states";
 
 export default function Simbrief() {
 
@@ -31,6 +32,22 @@ export default function Simbrief() {
     const router = useRouter()
 
 
+        // Settings variables
+        const [defaultLBS, setDefaultLBS] = useState(false);
+        const [isLoaded, setIsLoaded] = useState(false);
+    
+        useEffect(() => {
+            if (typeof window === 'object') {
+                const storedValue = getSettings();
+    
+                if (storedValue !== null) {
+                    setDefaultLBS(storedValue['useLBSwitch'] === 'true');
+                    console.log(storedValue);
+
+                }
+                setIsLoaded(true);
+            }
+        }, []);
 
     useEffect(() => {
         if(data){
@@ -46,6 +63,13 @@ export default function Simbrief() {
 
     if (!data) {
         return <div><ErrorItem errorCode="x0005"></ErrorItem></div>
+    }
+
+    function correctFormat(num : any) {
+        if(defaultLBS) {
+            num = parseInt(kgToLbs(num).toFixed(0))
+        }
+        return formatNumberToThousands(num)
     }
 
  
@@ -86,9 +110,9 @@ export default function Simbrief() {
       
           <img src={`/images/aircrafts/${data?.aircraft?.base_type || 'A20N'}.png`} alt="Simbrief logo" width={300} height={300} /></div>
           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Type </span> <span>A20N</span></div>
-          <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Empty Weight </span> <span>{formatNumberToThousands(data?.weights?.oew)} kg</span></div>
-          <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Max MZFW </span> <span>{formatNumberToThousands(data?.weights?.max_zfw)} kg</span></div>
-          <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Max TOW </span> <span>{formatNumberToThousands(data?.weights?.max_tow)} kg</span></div>
+          <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Empty Weight </span> <span>{correctFormat(data?.weights?.oew)} {defaultLBS ? "lbs" : "kg"}</span></div>
+          <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Max MZFW </span> <span>{correctFormat(data?.weights?.max_zfw)} {defaultLBS ? "lbs" : "kg"}</span></div>
+          <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Max TOW </span> <span>{correctFormat(data?.weights?.max_tow)} {defaultLBS ? "lbs" : "kg"}</span></div>
           </div>
 
           <div className="grid row-span-1 border border-[#272727] bg-[#141414a4] rounded-3xl p-4" style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.05))' }}>
@@ -113,12 +137,12 @@ export default function Simbrief() {
 
           <div className="grid bg-[#141414a4] border border-[#272727] rounded-3xl p-4" style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.05))' }}>
            <span className="font-bold text-[30px] h-fit border-b border-[#272727] pb-2">Loadsheet</span>
-           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Enroute Burn </span> <span>{formatNumberToThousands(data?.general?.total_burn)} kg</span></div>
+           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Enroute Burn </span> <span>{correctFormat(data?.general?.total_burn)} {defaultLBS ? "lbs" : "kg"}</span></div>
            <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Passengers </span> <span>{formatNumberToThousands(data?.general?.passengers)}</span></div>
-           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Passgr. (avg/wgt)</span> <span>{formatNumberToThousands(data?.weights?.pax_weight)} kg</span></div>
-           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Tow </span> <span>{formatNumberToThousands(data?.weights?.est_tow)} kg</span></div>
-           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold items-center  gap-2">Block Fuel </span> <span>{formatNumberToThousands(data?.fuel?.plan_ramp)} kg</span></div>
-           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold items-center  gap-2">Takeoff Fuel </span> <span>{formatNumberToThousands(data?.fuel?.plan_takeoff)} kg</span></div>
+           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Passgr. (avg/wgt)</span> <span>{correctFormat(data?.weights?.pax_weight)} {defaultLBS ? "lbs" : "kg"}</span></div>
+           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Tow </span> <span>{correctFormat(data?.weights?.est_tow)} {defaultLBS ? "lbs" : "kg"}</span></div>
+           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold items-center  gap-2">Block Fuel </span> <span>{correctFormat(data?.fuel?.plan_ramp)} {defaultLBS ? "lbs" : "kg"}</span></div>
+           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold items-center  gap-2">Takeoff Fuel </span> <span>{correctFormat(data?.fuel?.plan_takeoff)} {defaultLBS ? "lbs" : "kg"}</span></div>
           </div>
 
           <div className="grid w-full bg-[#141414a4] border border-[#272727] rounded-3xl p-4 " style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.05))' }}>

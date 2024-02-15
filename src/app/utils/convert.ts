@@ -97,3 +97,15 @@ export const timestampToDate = (timestamp: number): string => {
     // Devolver la fecha formateada como una cadena en el formato dd/mm/yyyy
     return `${formattedDay}/${formattedMonth}/${year}`;
 };
+
+
+export const kgToLbs = (kilograms: number) => {
+    const poundsPerKg = 2.20462;
+    return kilograms * poundsPerKg;
+};
+
+export const lbsToKg = (pounds: number) => {
+    const kgPerPound = 0.453592;
+    return pounds * kgPerPound;
+};
+

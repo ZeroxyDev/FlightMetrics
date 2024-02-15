@@ -24,7 +24,7 @@ export default function Titlebar() {
 {  actualPage != "/" ?  <Link href={"/"} className="inline-flex justify-center items-center  w-[30px] h-[30px] cursor-pointer text-primary"><IoIosArrowBack/></Link> : <div className="flex items-center justify-center">
   <Link href={"/settings"} className="inline-flex justify-center items-center w-[30px] h-[30px] cursor-pointer text-primary"><IoMdSettings/></Link>
   </div> }
-        <h1 data-tauri-drag-region className="font-bold text-primary text-sm">Flight Metrics</h1>
+        <h1 data-tauri-drag-region className="font-bold text-primary text-sm">FlightMetrics</h1>
         <div className="inline-flex justify-center text-primary items-center w-[30px] h-[30px] cursor-pointer" onClick={onClose} id="titlebar-close">
           <IoMdClose />
     </div>

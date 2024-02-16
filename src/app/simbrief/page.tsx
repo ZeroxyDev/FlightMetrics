@@ -109,7 +109,7 @@ export default function Simbrief() {
           <div> <span className="font-bold text-[30px] h-fit border-b border-[#272727] pb-2">Aircraft</span>
       
           <img src={`/images/aircrafts/${data?.aircraft?.base_type || 'A20N'}.png`} alt="Simbrief logo" width={300} height={300} /></div>
-          <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Type </span> <span>A20N</span></div>
+          <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Type </span> <span>{data?.aircraft?.base_type}</span></div>
           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Empty Weight </span> <span>{correctFormat(data?.weights?.oew)} {defaultLBS ? "lbs" : "kg"}</span></div>
           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Max MZFW </span> <span>{correctFormat(data?.weights?.max_zfw)} {defaultLBS ? "lbs" : "kg"}</span></div>
           <div className="flex w-full justify-between items-center text-lg mt-3"><span className="flex font-bold  items-center  gap-2">Max TOW </span> <span>{correctFormat(data?.weights?.max_tow)} {defaultLBS ? "lbs" : "kg"}</span></div>

@@ -47,6 +47,7 @@ export default function Calculate() {
 
     const [dataToDashboard, setDataToDashboard] = useState<any>({});
     const [useSimbriefUser, setuseSimbriefUser] = useState<string>("");
+    const [simbriefLoaded, setSimbriefLoaded] = useState<boolean>(false);
 
     const [noise, setNoise] = useState<SelectType | null>(null); 
     const [noiseOptions, setNoiseOptions] = useState<SelectType[]>([
@@ -112,7 +113,7 @@ export default function Calculate() {
             try {
                 const response = await fetchLocalAPI(`aircraft/${aircraftType.value}`);
                 
-                if (useSimbriefUser == "") {
+                if (!simbriefLoaded) {
                     updateSimbriefSettings((prevSettings: any) => ({
                         origin: { pos_lat: dataToDashboard.origin.pos_lat, pos_long: dataToDashboard.origin.pos_long},
                         destination: { pos_lat: dataToDashboard.destination.pos_lat, pos_long: dataToDashboard.destination.pos_long},
@@ -211,6 +212,8 @@ export default function Calculate() {
             })    
         })
 
+        setSimbriefLoaded(true);
+
         if (simbriefData.icao) {
             await checkandsetICAO(simbriefData.icao)
         }
@@ -233,7 +236,7 @@ export default function Calculate() {
         if(actualStep === -1 && ! await checkandsetSimbrief()) return
         if(actualStep === 0 && ! await checkandsetICAO()) return
 
-        if (useSimbriefUser !== "") {
+        if (simbriefLoaded) {
             if (actualStep === 8) {
 
                 if (isReadyToProceed) {
@@ -298,7 +301,7 @@ export default function Calculate() {
                 ...aircraftDetails
             },
             flightDetails: {
-                grossWeight: ((!defaultLBS && useSimbriefUser == "") ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) ,
+                grossWeight: ((!defaultLBS || simbriefLoaded) ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) ,
                 centerOfGravity: selectedCG,
                 QNH: selectedQNH,
                 temperature: selectedTemperature,
@@ -351,7 +354,7 @@ export default function Calculate() {
 
         updateMCDUSettings(performance);
 
-        if (useSimbriefUser !== "") {
+        if (simbriefLoaded) {
             if (!defaultSimbriefInfo) {
                 router.push('/result');
             }else {
@@ -499,7 +502,7 @@ useEffect(() => {
             case 8:
                 return noise !== null;
             case 9:
-                return ((!defaultLBS && useSimbriefUser == "") ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) >= parseInt(aircraftDetails?.info.weight.empty) * 1000 && ((!defaultLBS && useSimbriefUser == "") ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) <= parseInt(aircraftDetails?.info.weight.maxTakeoff) * 1000;
+                return ((!defaultLBS || simbriefLoaded) ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) >= parseInt(aircraftDetails?.info.weight.empty) * 1000 && ((!defaultLBS || simbriefLoaded) ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) <= parseInt(aircraftDetails?.info.weight.maxTakeoff) * 1000;
             case 10:
                 return selectedCG >= 8.0 && selectedCG <= 50.0;
             case 11:
@@ -540,7 +543,7 @@ useEffect(() => {
             case 8:
                 return createSelect('Is noise reduction required?', noise, noiseOptions, setNoise, false, true, "Are you requiring noise reduction on your flight?");
             case 9:
-                return createInputOption('Select your Gross Weight', selectedGW, setSelectedGW, 'gw', true, `Enter the Gross Weight of your aircraft in ${(defaultLBS && useSimbriefUser !== "") ? "lbs" : "kg"}.`);
+                return createInputOption('Select your Gross Weight', selectedGW, setSelectedGW, 'gw', true, `Enter the Gross Weight of your aircraft in ${(defaultLBS && simbriefLoaded) ? "lbs" : "kg"}.`);
             case 10:
                 return createInputOption('Select your Center of Gravity', selectedCG, setSelectedCG, 'cg', true, "Enter the Center of Gravity of your aircraft.");
             case 11:

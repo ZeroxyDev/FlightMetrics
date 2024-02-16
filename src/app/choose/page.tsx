@@ -499,7 +499,7 @@ useEffect(() => {
             case 8:
                 return noise !== null;
             case 9:
-                return (!defaultLBS ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) >= parseInt(aircraftDetails?.info.weight.empty) * 1000 && (!defaultLBS ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) <= parseInt(aircraftDetails?.info.weight.maxTakeoff) * 1000;
+                return ((!defaultLBS && useSimbriefUser == "") ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) >= parseInt(aircraftDetails?.info.weight.empty) * 1000 && ((!defaultLBS && useSimbriefUser == "") ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) <= parseInt(aircraftDetails?.info.weight.maxTakeoff) * 1000;
             case 10:
                 return selectedCG >= 8.0 && selectedCG <= 50.0;
             case 11:
@@ -540,7 +540,7 @@ useEffect(() => {
             case 8:
                 return createSelect('Is noise reduction required?', noise, noiseOptions, setNoise, false, true, "Are you requiring noise reduction on your flight?");
             case 9:
-                return createInputOption('Select your Gross Weight', selectedGW, setSelectedGW, 'gw', true, `Enter the Gross Weight of your aircraft in ${defaultLBS ? "lbs" : "kg"}.`);
+                return createInputOption('Select your Gross Weight', selectedGW, setSelectedGW, 'gw', true, `Enter the Gross Weight of your aircraft in ${(defaultLBS && useSimbriefUser !== "") ? "lbs" : "kg"}.`);
             case 10:
                 return createInputOption('Select your Center of Gravity', selectedCG, setSelectedCG, 'cg', true, "Enter the Center of Gravity of your aircraft.");
             case 11:

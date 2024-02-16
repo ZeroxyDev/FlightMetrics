@@ -298,7 +298,7 @@ export default function Calculate() {
                 ...aircraftDetails
             },
             flightDetails: {
-                grossWeight: (!defaultLBS ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) ,
+                grossWeight: ((!defaultLBS && useSimbriefUser == "") ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) ,
                 centerOfGravity: selectedCG,
                 QNH: selectedQNH,
                 temperature: selectedTemperature,

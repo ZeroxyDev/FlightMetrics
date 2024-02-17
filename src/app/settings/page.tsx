@@ -19,7 +19,7 @@ export default function Settings() {
       title: 'General Settings',
       content: (
         <form>
-          {CreateInput('useSimbriefInput', 'Set your simbrief username', 'Enter your simbrief username', handleSimBriefInput, '', 'Your simbrief username...', 'text')}
+          {CreateInput('useSimbriefInput', 'Set your Simbrief username', 'Enter your Simbrief username', handleSimBriefInput, '', 'Your Simbrief username...', 'text')}
           {CreateSwitch('useSimBriefSwitch', 'Use SimBrief Integration automatically', 'Enable integration with SimBrief for flight metrics', handleUseSimBriefSwitch)}
           {CreateSwitch('useInfoViewerSwitch', 'View Simbrief information before takeoff calculation', 'View Simbrief information before takeoff calculation', handleUseInfoViewerSwitch)}
           {CreateSwitch('useLBSwitch', 'Use LBS by default', 'Use LBS instead of KG by default', handleUseLBSwitch)}

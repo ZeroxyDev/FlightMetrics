@@ -1,26 +1,30 @@
 "use client";
 import React from "react";
 import { CreateSwitch } from "../UI/switch/switch";
-import Accordion from "../UI/switch/accordion";
-import { useSwitchState } from "../utils/states";
+import Accordion from "../UI/accordion/accordion";
+import { getSetting, useSwitchState } from "../utils/states";
 import { IoIosArrowBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import CreateInput from "../UI/inputs/label";
 
 export default function Settings() {
   const [useSimBriefSwitch, handleUseSimBriefSwitch] = useSwitchState('useSimBriefSwitch', false);
   const [useLBSwitch, handleUseLBSwitch] = useSwitchState('useLBSwitch', false);
   const [useInfoViewerSwitch, handleUseInfoViewerSwitch] = useSwitchState('useInfoViewerSwitch', true);
   const [useMetarSwitch, handleUseMetarSwitch] = useSwitchState('useMetarSwitch', true);
-
+  const [useSimbriefInput, handleSimBriefInput] = useSwitchState('useSimbriefInput', "");
+  
   const accordionItems = [
     {
       title: 'General Settings',
       content: (
         <form>
+          {CreateInput('useSimbriefInput', 'Set your simbrief username', 'Enter your simbrief username', handleSimBriefInput, '', 'Your simbrief username...', 'text')}
           {CreateSwitch('useSimBriefSwitch', 'Use SimBrief Integration automatically', 'Enable integration with SimBrief for flight metrics', handleUseSimBriefSwitch)}
           {CreateSwitch('useInfoViewerSwitch', 'View Simbrief information before takeoff calculation', 'View Simbrief information before takeoff calculation', handleUseInfoViewerSwitch)}
           {CreateSwitch('useLBSwitch', 'Use LBS by default', 'Use LBS instead of KG by default', handleUseLBSwitch)}
           {CreateSwitch('useMetarSwitch', 'Use metar API', 'Use metar API by default', handleUseMetarSwitch)}
+          
         </form>
       ),
     }

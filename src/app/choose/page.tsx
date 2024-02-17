@@ -69,6 +69,15 @@ export default function Calculate() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
+
+        async function cck(user? : string) {
+            setActualStep(5);
+           const getSF = await checkandsetSimbrief(user);
+            if (!getSF) {
+                setActualStep(-1);
+            }
+           }
+
         if (typeof window === 'object') {
             const storedValue = getSettings();
 
@@ -77,9 +86,19 @@ export default function Calculate() {
                 setDefaultSimbriefInfo(storedValue['useInfoViewerSwitch'] === 'true');
                 setDefaultLBS(storedValue['useLBSwitch'] === 'true');
                 setDefaultMetar(storedValue['useMetarSwitch'] === 'true');
+
+                if (storedValue['useSimbriefInput'] !== "") {
+                    setuseSimbriefUser(storedValue['useSimbriefInput']?.replace(/['"]+/g, ''));
+                }
+
                 console.log(storedValue);
                 if (storedValue['useSimBriefSwitch'] === 'true') {
-                    setActualStep(-1);
+                    if (storedValue['useSimbriefInput']?.replace(/['"]+/g, '')) {
+                        cck(storedValue['useSimbriefInput']?.replace(/['"]+/g, ''));
+                    }else {
+                        setActualStep(-1);
+                    }
+                    
                 }
             }
             setIsLoaded(true);
@@ -145,7 +164,7 @@ export default function Calculate() {
     }, [aircraftType]);
 
     async function checkandsetICAO(icao?: string) {
-        if (actualStep === 0 || actualStep === -1) {
+        if (actualStep === 0 || actualStep === -1 || actualStep === 5 || true) {
             setLoading(true);
             setSelectedAirport({
                 value: icao ? icao : airportICAO.toUpperCase(),
@@ -187,12 +206,13 @@ export default function Calculate() {
     }
 
 
-    async function checkandsetSimbrief() {
-        if (actualStep === -1) {
+    async function checkandsetSimbrief(simbriefUser?: string) {
+        if (actualStep === -1 || actualStep === 5 || true) {
         // Setear las variables del METAR si está activo
         setShowAlert(null);
         try {
-            const simbriefData = await fetchSimbrief(useSimbriefUser);
+            console.log(useSimbriefUser);
+            const simbriefData = await fetchSimbrief(simbriefUser ? simbriefUser : useSimbriefUser);
         if (!simbriefData) {
             setShowAlert('Invalid Simbrief code');
         }
@@ -221,7 +241,10 @@ export default function Calculate() {
   
 
         updateSimbriefSettings({ ...simbriefData });
+
+
         setActualStep(5);
+        return true
         } catch (error) {
             setShowAlert('Invalid Simbrief username');
         }

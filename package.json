@@ -4,471 +4,743 @@
 
 
 
-  "build": {
+
+
+
+"build": {
   
 
 
 
 
-    
 
 
 
-
-  "appId": "com.zeroxy.flightmetrics",
   
 
 
 
 
-    
 
 
 
-
-  "productName": "FlightMetrics",
+"appId": "com.zeroxy.flightmetrics",
   
 
 
 
 
-    
 
 
 
-
-  "directories": {
   
 
 
 
 
-    
 
 
 
-
-    
-
-
-
-
-  "output": "dist"
+"productName": "FlightMetrics",
   
 
 
 
 
-    
 
 
 
-
-  },
   
 
 
 
 
-    
 
 
 
-
-  "win": {
+"directories": {
   
 
 
 
 
-    
 
 
 
-
-    
-
-
-
-
-  "target": "NSIS"
   
 
 
 
 
-    
 
 
 
-
-  }
   
 
 
 
 
-  },
+
+
+
+"output": "dist"
   
 
 
 
 
-  "name": "flightmetrics",
+
+
+
   
 
 
 
 
-  "version": "1.3.2",
+
+
+
+},
   
 
 
 
 
-  "private": true,
+
+
+
   
 
 
 
 
-  "scripts": {
+
+
+
+"win": {
   
 
 
 
 
-    
 
 
 
-
-  "dev": "next dev --port 3000",
   
 
 
 
 
-    
 
 
 
-
-  "build": "next build",
   
 
 
 
 
-    
 
 
 
-
-  "start": "next start",
+"target": "NSIS"
   
 
 
 
 
-    
 
 
 
-
-  "tauri": "tauri",
   
 
 
 
 
-    
 
 
 
-
-  "lint": "next lint"
+}
   
 
 
 
 
-  },
+
+
+
+},
   
 
 
 
 
-  "dependencies": {
+
+
+
+"name": "flightmetrics",
   
 
 
 
 
-    
 
 
 
-
-  "@radix-ui/react-accordion": "^1.1.2",
+"version": "1.3.3",
   
 
 
 
 
-    
 
 
 
-
-  "@radix-ui/react-icons": "^1.3.0",
+"private": true,
   
 
 
 
 
-    
 
 
 
-
-  "@radix-ui/react-switch": "^1.0.3",
+"scripts": {
   
 
 
 
 
-    
 
 
 
-
-  "@radix-ui/react-tooltip": "^1.0.7",
   
 
 
 
 
-    
 
 
 
-
-  "@tauri-apps/api": "^1.5.3",
+"dev": "next dev --port 3000",
   
 
 
 
 
-    
 
 
 
-
-  "cobe": "^0.6.3",
   
 
 
 
 
-    
 
 
 
-
-  "next": "14.1.0",
+"build": "next build",
   
 
 
 
 
-    
 
 
 
-
-  "pnpm": "^8.15.3",
   
 
 
 
 
-    
 
 
 
-
-  "prettier": "^3.2.5",
+"start": "next start",
   
 
 
 
 
-    
 
 
 
-
-  "react": "^18",
   
 
 
 
 
-    
 
 
 
-
-  "react-dom": "^18",
+"tauri": "tauri",
   
 
 
 
 
-    
 
 
 
-
-  "react-icons": "^5.0.1",
   
 
 
 
 
-    
 
 
 
-
-  "react-select": "^5.8.0"
+"lint": "next lint"
   
 
 
 
 
-  },
+
+
+
+},
   
 
 
 
 
-  "devDependencies": {
+
+
+
+"dependencies": {
   
 
 
 
 
-    
 
 
 
-
-  "@tauri-apps/cli": "^1.5.9",
   
 
 
 
 
-    
 
 
 
-
-  "@types/node": "^20",
+"@radix-ui/react-accordion": "^1.1.2",
   
 
 
 
 
-    
 
 
 
-
-  "@types/react": "^18",
   
 
 
 
 
-    
 
 
 
-
-  "@types/react-dom": "^18",
+"@radix-ui/react-icons": "^1.3.0",
   
 
 
 
 
-    
 
 
 
-
-  "autoprefixer": "^10.0.1",
   
 
 
 
 
-    
 
 
 
-
-  "eslint": "^8",
+"@radix-ui/react-label": "^2.0.2",
   
 
 
 
 
-    
 
 
 
-
-  "eslint-config-next": "14.1.0",
   
 
 
 
 
-    
 
 
 
-
-  "postcss": "^8",
+"@radix-ui/react-switch": "^1.0.3",
   
 
 
 
 
-    
 
 
 
-
-  "tailwindcss": "^3.3.0",
   
 
 
 
 
-    
 
 
 
-
-  "typescript": "^5"
+"@radix-ui/react-tooltip": "^1.0.7",
   
 
 
 
 
-  }
+
+
+
+  
+
+
+
+
+
+
+
+"@tauri-apps/api": "^1.5.3",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"cobe": "^0.6.3",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"next": "14.1.0",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"pnpm": "^8.15.3",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"prettier": "^3.2.5",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"react": "^18",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"react-dom": "^18",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"react-icons": "^5.0.1",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"react-select": "^5.8.0"
+  
+
+
+
+
+
+
+
+},
+  
+
+
+
+
+
+
+
+"devDependencies": {
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"@tauri-apps/cli": "^1.5.9",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"@types/node": "^20",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"@types/react": "^18",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"@types/react-dom": "^18",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"autoprefixer": "^10.0.1",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"eslint": "^8",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"eslint-config-next": "14.1.0",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"postcss": "^8",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"tailwindcss": "^3.3.0",
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+"typescript": "^5"
+  
+
+
+
+
+
+
+
+}
 }

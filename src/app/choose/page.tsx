@@ -211,7 +211,6 @@ export default function Calculate() {
         // Setear las variables del METAR si está activo
         setShowAlert(null);
         try {
-            console.log(useSimbriefUser);
             const simbriefData = await fetchSimbrief(simbriefUser ? simbriefUser : useSimbriefUser);
         if (!simbriefData) {
             setShowAlert('Invalid Simbrief code');
@@ -243,7 +242,12 @@ export default function Calculate() {
         updateSimbriefSettings({ ...simbriefData });
 
 
+       if (simbriefUser) {
         setActualStep(5);
+       }else{
+        setActualStep(4);
+       }
+       
         return true
         } catch (error) {
             setShowAlert('Invalid Simbrief username');
@@ -527,7 +531,7 @@ useEffect(() => {
             case 9:
                 return ((!defaultLBS || simbriefLoaded) ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) >= parseInt(aircraftDetails?.info.weight.empty) * 1000 && ((!defaultLBS || simbriefLoaded) ? selectedGW : lbsToKg(parseInt(selectedGW.toFixed(0)))) <= parseInt(aircraftDetails?.info.weight.maxTakeoff) * 1000;
             case 10:
-                return selectedCG >= 8.0 && selectedCG <= 50.0;
+                return selectedCG >= aircraftDetails?.info?.trim?.minCG && selectedCG <= aircraftDetails?.info?.trim?.maxCG;
             case 11:
                 return selectedQNH >= 800 && selectedQNH <= 1100;
             case 12:

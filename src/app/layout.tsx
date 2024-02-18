@@ -1,56 +1,80 @@
-"use client";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import Titlebar from "./components/layout/titlebar";
-import { MCDUContextProvider } from "./context/mcduContext";
-import { useEffect, useState } from "react";
-import Footer from "./components/layout/footer";
-import { SimbriefContextProvider } from "./context/simbriefContext";
-import Link from "next/link";
-import { IoMdSettings } from "react-icons/io";
+import Layout from "./components/layout/layout";
+import type { Viewport } from 'next'
 
-const inter = Inter({ subsets: ["latin"] });
 
-interface WindowProps extends Window {
-  __TAURI__?: boolean;
+export const viewport: Viewport = {
+  colorScheme: 'dark',
 }
-declare const window: WindowProps;
 
+export const metadata: Metadata = {
+  metadataBase: new URL("https://flightmetrics.vercel.app/"),
+  title: "FlightMetrics - Your performance calculator",
+  description:
+  "TODO: Add description",
+  generator: "Next.js",
+  applicationName: "FlightMetrics",
+  keywords: [
+      "FlightMetrics",
+      "FlightMetrics"
+  ],
+  openGraph: {
+      title: "FlightMetrics - Your performance calculator",
+      description:
+    "TODO: Add description",
+      url: "https://flightmetrics.vercel.app/",
+      siteName: "FlightMetrics",
+      images: [
+          {
+              url: "./public/metadata.jpg",
+              width: 1200,
+              height: 630,
+              alt: "FlightMetrics - Your performance calculator",
+          },
+      ],
+      locale: "en-US",
+      type: "website",
+  },
+  twitter: {
+      card: "summary_large_image",
+      title: "FlightMetrics - Your performance calculator",
+      description:
+    "TODO : Add description",
+      creator: "ZeroxyDev",
+      creatorId: "0000000000",
+      images: ["./public/metadata.jpg"],
+  },
+  robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+          index: true,
+          follow: false,
+          noimageindex: true,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+      },
+  },
+  category: "service",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  const [isTauri, setIsTauri] = useState<boolean>(false);
-
-  useEffect(() => {
-    document.addEventListener('contextmenu', event => event.preventDefault());
-
-    if (window?.__TAURI__) {
-      console.log('Tauri detected');
-      setIsTauri(true);
-    }
-  }, []);
+   
 
   return (
     <html lang="en">
-      <body className={`rounded-[40px]  m-0 ${isTauri ? 'bg-transparent' : 'bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#ffffff10_1px)] bg-[size:20px_20px]'} overflow-hidden`}>
-        <div style={{ height: isTauri ? '700px' : '100vh' }} className={`bg-[#000000] bg-[radial-gradient(#ffffff20_1px,#ffffff10_1px)] bg-[size:20px_20px] w-full ${isTauri ? 'h-[600px]' : 'h-screen'} flex justify-center items-center bordernone border-tertiary rounded-big`}>
-        {isTauri && <div className='h-12 mb-8 block z-20'><Titlebar /></div>}
-        {!isTauri &&<Link href={"/settings"} className="inline-flex z-50 fixed top-[20px] right-[20px] justify-center items-center w-[30px] h-[30px] cursor-pointer text-primary"><IoMdSettings/></Link>}
-        <div className='w-full z-10 flex justify-center items-center h-full '>
-          <SimbriefContextProvider>
-        <MCDUContextProvider>
+      <body className="bg-transparent">
+        <Layout>
           {children}
-        </MCDUContextProvider>
-        </SimbriefContextProvider> 
-          </div>
-          {isTauri && <Footer/>}
-      </div>
+        </Layout>
       </body>
     </html>
   );

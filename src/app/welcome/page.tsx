@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import HighlightButton from '../UI/buttons/highlight-button';
 import DownloadButton from '../UI/buttons/downloadButton';
 import generalSettings from '@/config/general';
-import QRGen from '../UI/buttons/QR/generateQR';
+import QRGen from '../UI/QR/generateQR';
 
 interface WindowProps extends Window {
     __TAURI__?: boolean;

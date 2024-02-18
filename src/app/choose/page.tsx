@@ -58,7 +58,8 @@ export default function Calculate() {
 
     const [runwayConditionOptions, setRunwayConditionOptions] = useState<SelectType[]>([
         { value: 'dry', label: 'Dry' },
-        { value: 'wet', label: 'Wet' }
+        { value: 'wet', label: 'Wet' },
+        { value: 'low', label: 'Low visibility' }
     ]);
 
     // Settings variables
@@ -335,6 +336,7 @@ export default function Calculate() {
                 windDirection: selectedWindDeg,
                 windSpeed: selectedWindKt,
                 transitionAlt: selectedTransAlt,
+                runwayCondition: runwayCondition?.value
             },
             // Puedes incluir más secciones según sea necesario
         };

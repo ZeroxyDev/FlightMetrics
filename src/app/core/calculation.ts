@@ -46,6 +46,15 @@ export function calculatev2(data: any) {
 
     const V2Speed = Math.ceil(staticV2 + distfrom5(mass));
 
+    if (data?.flightDetails?.runwayCondition) {
+        if (data.flightDetails.runwayCondition === "wet") {
+            staticV2 += 4;  
+        }
+        if (data.flightDetails.runwayCondition === "low") {
+            staticV2 += 6;  
+        }
+    }
+
     return Math.ceil(staticV2);
 }
 
@@ -145,7 +154,7 @@ export function calculateFlexTemp(data: any): number {
         flexTemp -= 1;
     }
 
-    // Regla 4: Con el Anti hielo completo, restar 1º
+    // Regla 4: Con el Anti hielo completo, restar 2º
     if (data.aircraft?.antiIceType?.length === 3) {
         flexTemp -= 1;
     }

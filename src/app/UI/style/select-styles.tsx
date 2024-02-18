@@ -30,7 +30,7 @@ export const colourStyles = {
     menuList: (provided: any) => ({
         ...provided,
         maxHeight: `${maxVisibleOptions * 50}px`, // 40px es la altura aproximada de una opción
-        overflowY: 'hidden',
+        overflowY: 'auto',
         borderRadius: '20px'
     }),
     singleValue: (styles: any) => ({ ...styles, color: '#D1D5DB', borderRadius: '20px' }),

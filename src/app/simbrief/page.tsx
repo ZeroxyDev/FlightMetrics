@@ -150,7 +150,7 @@ export default function Simbrief() {
            <div className="w-full grid grid-cols-1 gap-6 mt-6 place-content-center place-items-center">
 
            {Object?.values(data?.prefile).map((item: any, index: number) => (
-    <a key={index} className="w-full" href={item.link} target="_blank" rel="noopener noreferrer">
+      <a key={index} className="w-full" href={item.link} target="_blank">
         <button className="bg-[#222222] hover:bg-secondary duration-300 transition-all text-white font-bold py-2 px-4 rounded-full w-full" style={{ filter: 'drop-shadow(0 0px 40px rgba(255, 255, 255, 0.05))' }}>
             {item.name}
         </button>

@@ -67,7 +67,7 @@ export default function Welcome() {
     {!isTauri &&
    <div className='fixed flex-col hidden xl:flex  p-4 justify-end  items-end bottom-4 right-0 '>
     <div className='rounded-[20px] w-fit flex justify-center items-center aspect-square scale-75 border-tertiary border relative'><QRGen link={handleDownload}></QRGen></div>
-     <div className='flex justify-end items-center mr-9 -mt-4 w-[440px]'><DownloadButton handleFunction={handleDownload} text="Download App"></DownloadButton></div>
+     <div className='flex justify-end items-center mr-9 -mt-4 w-[440px]'><DownloadButton handleFunction={handleDownload} text="Download"></DownloadButton></div>
    </div>
     }
 </div>

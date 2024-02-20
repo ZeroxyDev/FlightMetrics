@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Layout from "./components/layout/layout";
 import type { Viewport } from 'next'
+import { Analytics } from '@vercel/analytics/react';
 
 
 export const viewport: Viewport = {
@@ -74,6 +75,7 @@ export default function RootLayout({
       <body className="bg-transparent">
         <Layout>
           {children}
+          <Analytics />
         </Layout>
       </body>
     </html>

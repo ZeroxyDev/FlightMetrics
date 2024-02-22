@@ -143,6 +143,13 @@ FlightMetrics is designed to simplify the process of aircraft performance analys
    npm run dev
    ```
 
+### Build dev app
+
+1. Build the project in developer mode
+   ```sh
+   npm run tauri dev
+   ```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->

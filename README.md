@@ -119,6 +119,56 @@ FlightMetrics is designed to simplify the process of aircraft performance analys
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- GETTING STARTED -->
+## How to run the project
+
+### Prerequisites
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/ZeroxyDev/flightmetrics.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Run the project
+   ```sh
+   npm run dev
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+* [![Next][Next.js]][Next-url]
+* [![React][React.js]][React-url]
+* [![Tailwind][Tailwind.com]][Tailwind-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- ROADMAP -->
 
 ## Roadmap
@@ -132,14 +182,6 @@ Key Features:
 - [x] Auto-updates: Stay current with the latest features and improvements effortlessly.
 
 See the [open issues](https://github.com/ZeroxyDev/flightmetrics/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## Contributing
-
-Contributions are welcome and appreciated. If you have suggestions or ideas to improve FlightMetrics, feel free to contribute by opening an issue or a pull request.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -180,9 +222,6 @@ Project Link: [https://github.com/ZeroxyDev/flightmetrics](https://github.com/Ze
 ## Acknowledgments
 
 - [Choose an Open Source License](https://choosealicense.com)
-- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-- [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-- [Malven's Grid Cheatsheet](https://grid.malven.co/)
 - [Img Shields](https://shields.io)
 - [GitHub Pages](https://pages.github.com)
 - [Font Awesome](https://fontawesome.com)

@@ -166,6 +166,7 @@ Don't forget to give the project a star! Thanks again!
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
 * [![Tailwind][Tailwind.com]][Tailwind-url]
+* [![Tauri][Tauri.app]][Tauri-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -266,3 +267,5 @@ Project Link: [https://github.com/ZeroxyDev/flightmetrics](https://github.com/Ze
 [Tailwind-url]: https://tailwindcss.com/
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com
+[Tauri.app]: https://img.shields.io/badge/tauri-000?style=for-the-badge&logo=tauri&logoColor=ffc131&color=1b1b1d
+[Tauri-url]: https://tauri.app/

@@ -5,12 +5,13 @@ import HighlightButton from '../UI/buttons/highlight-button';
 import DownloadButton from '../UI/buttons/downloadButton';
 import generalSettings from '@/config/general';
 import QRGen from '../UI/QR/generateQR';
+import { useSwitchState } from '../utils/states';
 
 interface WindowProps extends Window {
     __TAURI__?: boolean;
   }
   declare const window: WindowProps;
-
+  
 export default function Welcome() {
     const [isMounted, setIsMounted] = useState<boolean>(false);
     const [isTauri, setIsTauri] = useState<boolean>(false);
@@ -27,9 +28,30 @@ export default function Welcome() {
             setIsMounted(true);
         }, 0); // Sin retraso para mostrar la bienvenida inmediatamente
         return () => clearTimeout(timer);
-
   
     }, []);
+
+
+    /*     
+       ***********************
+       SET DEFAULT SETTINGS 
+       ***********************
+    */
+    function SetDefaultSettings () {
+        useSwitchState('useSimBriefSwitch', false);
+        useSwitchState('useLBSwitch', false);
+        useSwitchState('useInfoViewerSwitch', true);
+        useSwitchState('useMetarSwitch', true);
+        useSwitchState('useSimbriefInput', "");
+    }
+
+    SetDefaultSettings()
+
+    /*     
+       ***********************
+       SET DEFAULT SETTINGS END
+       ***********************
+    */
 
     const handleDownload = () => {
         // Hacer la solicitud a la API

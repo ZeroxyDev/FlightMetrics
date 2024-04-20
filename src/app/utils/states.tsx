@@ -18,9 +18,8 @@ export const useLocalStorageState = (key: string, defaultValue: any) => {
   
     useEffect(() => {
       if (isClient) {
-        console.log(key, value);
-        return
         localStorage.setItem(key, JSON.stringify(value));
+        return
       }
     }, [key, value, isClient]);
   

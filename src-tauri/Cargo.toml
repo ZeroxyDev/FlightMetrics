@@ -1,6 +1,6 @@
 [package]
 name = "flightmetrics"
-version = "1.3.6"
+version = "1.3.7"
 description = "FlightMetrics is a tool for aircraft simulation"
 authors = ["you"]
 license = ""

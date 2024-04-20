@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "FlightMetrics",
-    "version": "1.3.4"
+    "version": "1.3.6"
   },
   "tauri": {
     "allowlist": {
@@ -16,14 +16,6 @@
       "http": {
         "all": true,
         "scope": ["https://**"]
-      },
-      "dialog": {
-        "all": false,
-        "ask": false,
-        "confirm": false,
-        "message": false,
-        "open": false,
-        "save": false
       },
       "process": {
         "all": false,
@@ -42,12 +34,6 @@
         "unminimize": true,
         "startDragging": true,
         "setAlwaysOnTop": true
-      },
-      "os": {
-        "all": false
-      },
-      "path": {
-        "all": true
       },
       "shell": {
         "all": false,
@@ -113,7 +99,7 @@
         "fullscreen": false,
         "height": 700,
         "resizable": false,
-        "title": "Flight Metrics",
+        "title": "FlightMetrics",
         "width": 758,
         "decorations": false,
         "transparent": true,

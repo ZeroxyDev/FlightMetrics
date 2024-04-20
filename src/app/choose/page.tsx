@@ -251,7 +251,7 @@ export default function Calculate() {
        
         return true
         } catch (error) {
-            setShowAlert('Invalid Simbrief username');
+            setShowAlert("Invalid SimBrief username (or you don't have an active SimBrief flight plan)."); 
         }
         
         return false

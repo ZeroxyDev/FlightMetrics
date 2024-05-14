@@ -161,7 +161,7 @@ Don't forget to show some love by starring this project! Your support is highly 
 
 ## License
 
-Distributed under the Apache License 2.0 License. See `LICENSE.md` for more information.
+Distributed under the CC BY-NC-SA 4.0. See `LICENSE.md` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

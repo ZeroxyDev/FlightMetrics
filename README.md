@@ -205,7 +205,7 @@ Project Link: [https://github.com/ZeroxyDev/flightmetrics](https://github.com/Ze
 [issues-shield]: https://img.shields.io/github/issues/ZeroxyDev/flightmetrics.svg?style=for-the-badge
 [issues-url]: https://github.com/ZeroxyDev/flightmetrics/issues
 [license-shield]: https://img.shields.io/badge/LICENSE%20-CC%20BY--NC--SA%204.0-97ca00?style=for-the-badge
-[license-url]: https://github.com/ZeroxyDev/flightmetrics/blob/main/LICENSE
+[license-url]: https://github.com/ZeroxyDev/flightmetrics/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/zeroxydev
 [product-screenshot]: images/screenshot.png

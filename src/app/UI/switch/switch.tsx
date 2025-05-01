@@ -1,9 +1,9 @@
 import * as Switch from "@radix-ui/react-switch";
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, PromiseLikeOfReactNode, useState, useEffect } from "react";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, useState, useEffect } from "react";
 import Tooltip from "../tooltip/tooltip";
 import { getSetting } from "@/app/utils/states";
 
-export const CreateSwitch = (id: string | undefined, label: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined, tooltipLabel: any, handleChange: (arg0: boolean) => void) => {
+export const CreateSwitch = (id: string | undefined, label: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined, tooltipLabel: any, handleChange: (arg0: boolean) => void) => {
     const [defaultChecked, setDefaultChecked] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 

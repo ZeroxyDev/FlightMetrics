@@ -97,6 +97,7 @@
     "windows": [
       {
         "fullscreen": false,
+        "center": true,
         "height": 700,
         "resizable": false,
         "title": "FlightMetrics",

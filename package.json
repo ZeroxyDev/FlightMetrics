@@ -10,7 +10,7 @@
         }
     },
     "name": "flightmetrics",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "private": true,
     "scripts": {
         "dev": "next dev --port 3000",
@@ -27,7 +27,9 @@
         "@radix-ui/react-switch": "^1.0.3",
         "@radix-ui/react-tooltip": "^1.0.7",
         "@tauri-apps/api": "^1.5.3",
+        "@types/canvas-confetti": "^1.9.0",
         "@vercel/analytics": "^1.2.2",
+        "canvas-confetti": "^1.9.3",
         "cobe": "^0.6.3",
         "lucide-react": "^0.503.0",
         "next": "14.1.1",
